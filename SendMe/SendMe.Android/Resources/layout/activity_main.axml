@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
+      <Switch
+        android:id="@+id/main_switchActivateCourier"
+          style="?android:textAppearanceMedium"
+            android:paddingBottom="15dp"
+            android:theme="@style/SCBSwitch"
+            android:clickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/textView1"
+            android:text="Send Me"
+            style="?android:textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+        <TextView
+            android:text="@string/version_number"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:maxLines="4"
+            style="?android:textAppearanceSmall"
+            android:gravity="center" />
+        <TextView
+            android:text="@string/about_sendMe"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            style="?android:textAppearanceSmall"
+            android:id="@+id/textView2"
+            android:gravity="center" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+            <Button
+                android:text="Request Quote"
+                android:backgroundTint="@color/primary"
+                android:theme="@style/button_primary"
+                android:id="@+id/main_requestCourier"
+                android:gravity="center"
+                android:layout_width="160dp"
+                android:paddingLeft="20dp"
+                android:layout_height="140dp" />
+            <Button
+                android:text="Make Money"
+                android:backgroundTint="@color/primary"
+                android:theme="@style/button_primary"
+                android:id="@+id/main_activateCourier"
+                android:gravity="center"
+                android:layout_width="160dp"
+                android:paddingRight="20dp"
+                android:layout_height="140dp" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

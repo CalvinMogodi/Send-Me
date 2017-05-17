@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <include
+      android:id="@+id/toolbar"
+      layout="@layout/toolbar" />
+  <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/toolbar"
+       android:padding="12dp">
+  <Spinner
+      android:id="@+id/requestCourier_vehiclebodytype"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:spinnerMode="dropdown" />
+  <Spinner
+      android:id="@+id/requestCourier_ItemSize"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:spinnerMode="dropdown"
+      android:visibility="gone" />
+  <AutoCompleteTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Pick Up Location"
+      android:completionThreshold="1"
+      android:id="@+id/requestCourier_actvpickup_location" />
+  <AutoCompleteTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Drop Location"
+      android:id="@+id/requestCourier_actvdrop_location" />
+  <EditText
+      android:inputType="textPersonName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Name"
+      android:id="@+id/requestCourier_etname" />
+  <EditText
+      android:inputType="textEmailAddress"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Email"
+      android:id="@+id/requestCourier_etemail" />
+  <EditText
+      android:inputType="phone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Cell Phone"
+      android:id="@+id/requestCourier_etphone" />
+  <Button
+      android:text="Get Quote"
+      android:backgroundTint="@color/primary"
+      android:theme="@style/button_primary"
+      android:id="@+id/requestCourier_getQuoteButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  <TextView
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/requestCourier_tvmessage" />
+</LinearLayout>
+  </RelativeLayout>

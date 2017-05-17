@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <ImageView
+        android:src="@drawable/profile_generic"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+       android:gravity="center"
+        android:contentDescription="@string/app_name" />
+    <EditText
+        android:id="@+id/dialog_login_username"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+    <EditText
+        android:id="@+id/dialog_login_password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:hint="Password" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:text="Cancel"
+            android:backgroundTint="@color/primary"
+            android:theme="@style/button_primary"
+            android:id="@+id/dialog_login_cancelbutton"
+            android:layout_width="140dp"
+            android:paddingLeft="20dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="@string/signin"
+            android:backgroundTint="@color/primary"
+            android:theme="@style/button_primary"
+            android:id="@+id/dialog_login_loginbutton"
+            android:layout_width="140dp"
+                android:paddingRight="20dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:gravity="center"
+        android:id="@+id/dialog_login_tvmessage" />
+  <TextView
+               android:id="@+id/login_forgot_password"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:theme="@color/accent"
+               android:gravity="center"
+               android:text="Forgot Password" />
+</LinearLayout>

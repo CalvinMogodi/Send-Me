@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <string-array name="sections">
+    <item>@string/tab1</item>
+  </string-array>
+  <string-array name="choosevehiclebodytypes">
+    <item>Choose Your Vehicle Body Type</item>
+  </string-array>
+  <string-array name="vehiclebodytypes_array">
+    <item>Select Vehicle Body Type</item>
+    <item>Motorcycle</item>
+    <item>Passenger</item>
+    <item>Bakkie - Single Cab</item>
+    <item>Bakkie - Tipper</item>
+    <item>Panel Van</item>
+    <item>Bus</item>
+    <item>Minibus</item>
+    <item>Truck - Drop Side</item>
+    <item>Truck</item>
+  </string-array>
+  <string-array name="vehiclebodytypeSignUp_array">
+    <item>Motorcycle</item>
+    <item>Passenger</item>
+    <item>Bakkie - Single Cab</item>
+    <item>Bakkie - Tipper</item>
+    <item>Panel Van</item>
+    <item>Bus</item>
+    <item>Minibus</item>
+    <item>Truck - Drop Side</item>
+    <item>Truck</item>
+  </string-array>
+  <string-array name="itemSize_array">
+    <item>Please Select Item Size</item>
+    <item>Normal Size</item>
+    <item>More Items</item>
+  </string-array>
+</resources>
