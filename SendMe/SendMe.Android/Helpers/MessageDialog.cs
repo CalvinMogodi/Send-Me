@@ -3,6 +3,7 @@ using Android.App;
 using Android.Widget;
 using SendMe.Interfaces;
 using Plugin.CurrentActivity;
+using Android.Telephony;
 
 namespace SendMe.Droid
 {
@@ -17,12 +18,25 @@ namespace SendMe.Droid
             progress.SetProgressStyle(ProgressDialogStyle.Spinner);
             progress.SetMessage("Loading...");
             progress.SetCancelable(false);
-            // progress.Create();
+            progress.Create();
             progress.Show();
         }
         public void HideLoading()
         {
             progress.Cancel();
+        }
+
+        public void SendSMS(string message)
+        {
+            
+            string[] mobileNumbers = { "0762551150", "0791240425" };
+            message = String.Format("Send Me: Comment from user - {0}", message);
+            foreach (var mobileNumber in mobileNumbers)
+            {
+                SmsManager.Default.SendTextMessage(mobileNumber, null, message, null, null);
+            }
+
+            SendToast("Message is sent sucessfully.");
         }
         public void SendMessage(string message, string title = null)
         {

@@ -45,6 +45,23 @@ namespace SendMe.Droid
 
             rcButton.Click += RCButton_Click;
             acButton.Click += ACButton_Click;
+
+            Toolbar.MenuItemClick += (sender, e) =>
+            {
+                var itemTitle = e.Item.TitleFormatted;
+                var intent = new Intent();
+                switch (itemTitle.ToString())
+                {                    
+                    case "Sign Up":
+                        intent = new Intent(this, typeof(SignUpActivity));
+                        break;
+                    case "Contact Us":
+                        intent = new Intent(this, typeof(ContactActivity));
+                        break;
+                }
+
+                StartActivity(intent);
+            };
         }
 
         private void RCButton_Click(object sender, EventArgs e)

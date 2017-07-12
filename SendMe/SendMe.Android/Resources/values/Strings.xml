@@ -2,6 +2,8 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">Send Me</string>
+  <string name="sing_up_header">Sing Up</string>
+  <string name="contact_us_header">Sing Up</string>
 	<string name="tab1">Request Courier</string>
   <string name="forgot_password">Forgot Password</string>
   <string name="request_courier">Request Courier</string>
@@ -22,4 +24,7 @@
   <string name="about_sendMe">This app is written in C# and native APIs using the Xamarin Platform. It shares code with its iOS, Android, &amp; Windows versions</string>
   <string name="app_description">This app is written in C# and native APIs using the Xamarin Platform. It shares code with its iOS, Android, &amp; Windows versions.</string>
   <string name="sign_in_text">Sign in with your account to save and sync items</string>
+  <string name="second_contact">079 124 0425</string>
+  <string name="first_contact">076 255 1150</string>
+  <string name="send">Send</string>
 </resources>

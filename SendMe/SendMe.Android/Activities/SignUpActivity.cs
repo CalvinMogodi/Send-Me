@@ -14,14 +14,19 @@ using Android.Support.Design.Widget;
 using SendMe.ViewModel;
 using SendMe.ViewModels;
 using SendMe.Helpers;
+using System.IO;
+using Android.Util;
+using Android.Graphics;
+using SendMe.Droid.Helpers;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "SignUpActivity")]
+    [Activity(Label = "@string/sing_up_header")]
     public class SignUpActivity : Activity
     {
         Button signUpButton;
-        //Switch userType;
+        public string Logo { get; set; }
+        public static readonly int PickImageId = 1000;
         Spinner vehiclebodytype;
         EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, extraCharges;
         TextView courierCharges, message;
@@ -31,6 +36,7 @@ namespace SendMe.Droid.Activities
         public User User { get; set; }
         public SignUpViewModel ViewModel { get; set; }
         public BaseViewModel BaseModel { get; set; }
+        ImageView profilePicture;
 
         string[] items = {"Motorcycle","Passenger","Bakkie - Single Cab","Bakkie - Tipper", "Panel Van","Bus","Minibus","Truck - Drop Side", "Truck",};
         protected override void OnCreate(Bundle savedInstanceState)
@@ -45,12 +51,16 @@ namespace SendMe.Droid.Activities
             if (!ValidateForm())
                 return;
 
+            MessageDialog messageDialog = new MessageDialog();
+            messageDialog.ShowLoading();
             message.Text = "";
+
             var _user = new User(){
                 Username = username.Text.Trim(),
                 DisplayName = displayName.Text.Trim(),
                 Password = password.Text.Trim(),
-                UserTypeId = 3,              
+                UserTypeId = 3,
+                ProfilePicture = Logo,
                 CourierPrice = new CourierPrice()
                 {
                     VehicleBodyTypes = mSelectedItems,
@@ -58,19 +68,19 @@ namespace SendMe.Droid.Activities
                     PricePerKM = Convert.ToDouble(pricePerKM.Text.Trim()),
                     ExtraCharges = Convert.ToDouble(extraCharges.Text.Trim()),
                 },
-        };
+            };
             
-
             ViewModel.SignUpUser(_user);
             if (ViewModel.IsSignUp)
             {
-                MessageDialog messageDialog = new MessageDialog();
                 messageDialog.SendToast("You are now registered to provide your service, Login to start making money");
                 Finish();
             }
                
             else
                 message.Text = "Unable to sign you up, please try again";
+
+            messageDialog.HideLoading();
         }
 
 
@@ -78,9 +88,16 @@ namespace SendMe.Droid.Activities
         {
             Validations validation = new Validations();
             Android.Graphics.Drawables.Drawable icon = Resources.GetDrawable(Resource.Drawable.error);
-            icon.SetBounds(0, 0, 0, 0);
+            icon.SetBounds(0, 0, icon.IntrinsicWidth, icon.IntrinsicHeight);
 
             FormIsValid = true;
+
+            if (string.IsNullOrEmpty(Logo))
+            {
+                MessageDialog messageDialog = new MessageDialog();
+                messageDialog.SendToast("Select Profile Picture");
+                FormIsValid = false;
+            }
 
             if (mSelectedItems == null)
             {
@@ -151,7 +168,7 @@ namespace SendMe.Droid.Activities
             displayName = FindViewById<EditText>(Resource.Id.signup_etdisplay_name);
             confirmPassword = FindViewById<EditText>(Resource.Id.signup_confirm_password);
             password = FindViewById<EditText>(Resource.Id.signup_password);
-
+            profilePicture = FindViewById<ImageView>(Resource.Id.signup_profile_picture);
             courierCharges = FindViewById<TextView>(Resource.Id.signup_tvCourierCharges);
             pricePerKM = FindViewById<EditText>(Resource.Id.signup_etPricePerKM);
             extraCharges = FindViewById<EditText>(Resource.Id.signup_etExtraCharges);
@@ -164,6 +181,7 @@ namespace SendMe.Droid.Activities
             var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.choosevehiclebodytypes, Android.Resource.Layout.SimpleSpinnerDropDownItem);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             vehiclebodytype.Adapter = adapter;
+            profilePicture.Click += SelectProfilePicture_Click;
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.SetTitle("Choose Your Vehicles Body Type");
@@ -193,13 +211,46 @@ namespace SendMe.Droid.Activities
             signUpButton.Click += SignUpButton_Click;
             
     }
-       
+
+        private void SelectProfilePicture_Click(object sender, EventArgs eventArgs)
+        {
+            Intent = new Intent();
+            Intent.SetType("image/*");
+            Intent.SetAction(Intent.ActionGetContent);
+            StartActivityForResult(Intent.CreateChooser(Intent, "Select Picture"), PickImageId);
+        }
         public void OnVehiclebodytype_TextChanged(object b, EventArgs e)
         {
             vehiclebodytypeDialog.Show();
          
         }
 
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if ((requestCode == PickImageId) && (resultCode == Result.Ok) && (data != null))
+            {
+                Context mContext = Android.App.Application.Context;
+                ImageManager imageManager = new ImageManager(mContext);
+
+                Android.Net.Uri uri = data.Data;
+                profilePicture.SetImageURI(uri);
+
+                profilePicture.DrawingCacheEnabled = true;
+
+                profilePicture.BuildDrawingCache();
+
+                Android.Graphics.Bitmap bm = profilePicture.GetDrawingCache(true);
+
+                MemoryStream stream = new MemoryStream();
+                bm.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 100, stream);
+                byte[] byteArray = stream.ToArray();
+                // String img_str = Base64.encodeToString(image, 0);
+                Logo = Base64.EncodeToString(byteArray, 0);
+                Bitmap bitmap = imageManager.ConvertStringToBitMap(Logo);
+                profilePicture.SetImageBitmap(bitmap);
+            }
         }
+
+    }
 
 }
