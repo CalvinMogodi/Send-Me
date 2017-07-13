@@ -19,13 +19,15 @@ namespace SendMe.Models
         public string CourierMobileNumber { get; set; }
 
         [JsonProperty("courierKmDistance")]
-        public double CourierKmDistance { get; set; }
+        public decimal CourierKmDistance { get; set; }
 
         [JsonProperty("price")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [JsonProperty("request")]
         public Request Request { get; set; }
 
+        [JsonProperty("courierProfilePicture")]
+        public string CourierProfilePicture { get; set; }
     }
 }

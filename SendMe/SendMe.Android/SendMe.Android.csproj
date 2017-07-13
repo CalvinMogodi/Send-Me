@@ -132,6 +132,9 @@
     <AndroidResource Include="Resources\layout\dialog_login.axml" />
     <AndroidResource Include="Resources\layout\activity_forgot_password.axml" />
     <AndroidResource Include="Resources\layout\activity_contact_us.axml" />
+    <AndroidResource Include="Resources\layout\activity_view_quote.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.axml">

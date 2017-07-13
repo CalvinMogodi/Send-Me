@@ -32,8 +32,7 @@ namespace SendMe.ViewModels
             try
             {
                 Quotes.Clear();
-                //var quotes = await DataStore.GetQuotesAsync(request);
-                //Quotes.ReplaceRange(quotes);
+                var quotes = MockedQuotes();
             }
             catch (Exception ex)
             {
@@ -43,6 +42,44 @@ namespace SendMe.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+
+        private ObservableRangeCollection<Quote> MockedQuotes()
+        {
+
+            var quotes = new ObservableRangeCollection<Quote>(){
+                new Quote { Id = Guid.NewGuid(),
+                    CourierName = "Calvin Mogodi",
+                    CourierMobileNumber = "1234567",
+                    CourierKmDistance = 3.36m,
+                    Price = 100,
+                    CourierProfilePicture = ""
+                    },
+                 new Quote { Id = Guid.NewGuid(),
+                    CourierName = "Given N",
+                    CourierMobileNumber = "1234567",
+                    CourierKmDistance = 15.6m,
+                    Price = 515,
+                    CourierProfilePicture = ""
+                    },
+                  new Quote { Id = Guid.NewGuid(),
+                    CourierName = "Given N",
+                    CourierMobileNumber = "1234567",
+                    CourierKmDistance = 15.6m,
+                    Price = 515,
+                    CourierProfilePicture = ""
+                    },
+                   new Quote { Id = Guid.NewGuid(),
+                    CourierName = "Given N",
+                    CourierMobileNumber = "1234567",
+                    CourierKmDistance = 15.6m,
+                    Price = 515,
+                    CourierProfilePicture = ""
+                    },
+            };
+            Quotes = quotes;
+            return quotes;
         }
 
     }

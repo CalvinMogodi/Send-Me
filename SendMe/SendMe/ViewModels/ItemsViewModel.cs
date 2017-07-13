@@ -3,49 +3,26 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using SendMe.Helpers;
 using SendMe.Model;
+using SendMe.Models;
 
 namespace SendMe.ViewModel
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public ObservableRangeCollection<Item> Items { get; set; }
+        public ObservableRangeCollection<Quote> Quotes { get; set; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableRangeCollection<Item>();
-            var task = ExecuteLoadItemsCommand();
-            task.Wait();
-        }
+            Quotes = new ObservableRangeCollection<Quote>();
+            var task = GetAdvertsAsync();
+            //task.Wait();
+        }       
 
-        public async Task AddItem(Item item)
+        public async Task GetAdvertsAsync()
         {
-            var _item = item as Item;
-            Items.Add(_item);
-            await DataStore.AddItemAsync(_item);
-        }
-
-        public async Task ExecuteLoadItemsCommand()
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
-            {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                Items.ReplaceRange(items);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            //Adverts = await DataStore.GetAdvertsAsync();
+            
         }
 
         ItemDetailViewModel detailsViewModel;

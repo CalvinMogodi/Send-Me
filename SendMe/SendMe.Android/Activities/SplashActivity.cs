@@ -13,8 +13,8 @@ namespace SendMe.Droid
             base.OnCreate(savedInstanceState);
 
             var mainActivityIntent = new Intent(this, typeof(MainActivity));
-            mainActivityIntent.AddFlags(ActivityFlags.ClearTop);
-            mainActivityIntent.AddFlags(ActivityFlags.SingleTop);
+            //mainActivityIntent.AddFlags(ActivityFlags.ClearTop);
+            //mainActivityIntent.AddFlags(ActivityFlags.SingleTop);
 
             StartActivity(mainActivityIntent);
             Finish();

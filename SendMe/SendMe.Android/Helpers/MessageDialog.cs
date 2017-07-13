@@ -38,6 +38,12 @@ namespace SendMe.Droid
 
             SendToast("Message is sent sucessfully.");
         }
+
+        public void SendSMS(string mobileNumber, string message)
+        {
+            SmsManager.Default.SendTextMessage(mobileNumber, null, message, null, null);
+            SendToast("Message is sent sucessfully.");
+        }
         public void SendMessage(string message, string title = null)
         {
             var activity = CrossCurrentActivity.Current.Activity;

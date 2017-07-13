@@ -16,9 +16,9 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
-      <Switch
-        android:id="@+id/main_switchActivateCourier"
-          style="?android:textAppearanceMedium"
+        <Switch
+            android:id="@+id/main_switchActivateCourier"
+            style="?android:textAppearanceMedium"
             android:paddingBottom="15dp"
             android:theme="@style/SCBSwitch"
             android:clickable="false"
@@ -37,19 +37,19 @@
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:gravity="center" />
         <TextView
             android:text="@string/version_number"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:maxLines="4"
             style="?android:textAppearanceSmall"
             android:gravity="center" />
         <TextView
             android:text="@string/about_sendMe"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             style="?android:textAppearanceSmall"
             android:id="@+id/textView2"
@@ -58,7 +58,7 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
             <Button
                 android:text="Request Quote"
                 android:backgroundTint="@color/primary"

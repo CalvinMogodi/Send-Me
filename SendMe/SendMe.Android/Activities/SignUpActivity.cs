@@ -27,8 +27,7 @@ namespace SendMe.Droid.Activities
         Button signUpButton;
         public string Logo { get; set; }
         public static readonly int PickImageId = 1000;
-        Spinner vehiclebodytype;
-        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, extraCharges;
+        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, extraCharges, vehiclebodytype;
         TextView courierCharges, message;
         AlertDialog vehiclebodytypeDialog;
         List<string> mSelectedItems;
@@ -162,7 +161,7 @@ namespace SendMe.Droid.Activities
             // Create your application here
             SetContentView(Resource.Layout.activity_sign_up);
             signUpButton = FindViewById<Button>(Resource.Id.button_sign_up);
-            vehiclebodytype = FindViewById<Spinner>(Resource.Id.signup_vehicle_body_type);
+            vehiclebodytype = FindViewById<EditText>(Resource.Id.signup_vehicle_body_type);
             username = FindViewById<EditText>(Resource.Id.signup_etUsername);
             courierMobileNumber = FindViewById<EditText>(Resource.Id.signup_courier_mobile_number);
             displayName = FindViewById<EditText>(Resource.Id.signup_etdisplay_name);
@@ -180,7 +179,8 @@ namespace SendMe.Droid.Activities
             vehiclebodytype.Touch += OnVehiclebodytype_TextChanged;
             var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.choosevehiclebodytypes, Android.Resource.Layout.SimpleSpinnerDropDownItem);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            vehiclebodytype.Adapter = adapter;
+           // vehiclebodytype.Adapter = adapter;
+           // vehiclebodytype.Touch += OnVehiclebodytype_TextChanged;
             profilePicture.Click += SelectProfilePicture_Click;
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -193,18 +193,50 @@ namespace SendMe.Droid.Activities
             builder.SetPositiveButton("OK", delegate {
                 var sads = vehiclebodytypeDialog.ListView.CheckedItemPositions;
                 List<string> selectedItems = new List<string>();
+
+                vehiclebodytype.Text = "";
                 for (int i = 0; i < items.Length; i++)
-                {                   
+                {
                     var isChecked = sads.Get(i);
                     if (isChecked)
-                    {                       
+                    {
                         var fd = items.ElementAt(i);
                         selectedItems.Add(fd);
-                    }                   
+                        if (vehiclebodytype.Text.Length > 30)
+                        {
+                            vehiclebodytype.Text = vehiclebodytype.Text.Substring(0, 31);
+                            vehiclebodytype.Text = vehiclebodytype.Text + "...";
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(vehiclebodytype.Text))
+                            {
+                                vehiclebodytype.Text = fd;
+                            }
+                            else
+                            {
+                                vehiclebodytype.Text = vehiclebodytype.Text + ", " + fd;
+                            }
+                        }
+
+                    }
                 }
-                
+
                 mSelectedItems = selectedItems;
+
                 vehiclebodytypeDialog.Cancel();
+                //for (int i = 0; i < items.Length; i++)
+                //{                   
+                //    var isChecked = sads.Get(i);
+                //    if (isChecked)
+                //    {                       
+                //        var fd = items.ElementAt(i);
+                //        selectedItems.Add(fd);
+                //    }                   
+                //}
+                
+                //mSelectedItems = selectedItems;
+                //vehiclebodytypeDialog.Cancel();
             });
             vehiclebodytypeDialog = builder.Create();
 
