@@ -2853,11 +2853,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f090012
 			public const int abc_toolbar_collapse_description = 2131296274;
 			
-			// aapt resource value: 0x7f09002c
-			public const int about_sendMe = 2131296300;
-			
 			// aapt resource value: 0x7f09002d
-			public const int app_description = 2131296301;
+			public const int about_sendMe = 2131296301;
+			
+			// aapt resource value: 0x7f09002e
+			public const int app_description = 2131296302;
 			
 			// aapt resource value: 0x7f090018
 			public const int app_name = 2131296280;
@@ -2871,62 +2871,65 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f090016
 			public const int character_counter_pattern = 2131296278;
 			
-			// aapt resource value: 0x7f09001a
-			public const int contact_us_header = 2131296282;
+			// aapt resource value: 0x7f09001b
+			public const int contact_us_header = 2131296283;
 			
-			// aapt resource value: 0x7f090025
-			public const int description = 2131296293;
+			// aapt resource value: 0x7f090026
+			public const int description = 2131296294;
 			
-			// aapt resource value: 0x7f090030
-			public const int first_contact = 2131296304;
+			// aapt resource value: 0x7f090031
+			public const int first_contact = 2131296305;
 			
-			// aapt resource value: 0x7f09001c
-			public const int forgot_password = 2131296284;
+			// aapt resource value: 0x7f09001d
+			public const int forgot_password = 2131296285;
 			
 			// aapt resource value: 0x7f090017
 			public const int hello = 2131296279;
 			
-			// aapt resource value: 0x7f09002b
-			public const int hint_description = 2131296299;
-			
-			// aapt resource value: 0x7f090029
-			public const int hint_name = 2131296297;
+			// aapt resource value: 0x7f09002c
+			public const int hint_description = 2131296300;
 			
 			// aapt resource value: 0x7f09002a
-			public const int info = 2131296298;
+			public const int hint_name = 2131296298;
+			
+			// aapt resource value: 0x7f09002b
+			public const int info = 2131296299;
+			
+			// aapt resource value: 0x7f090025
+			public const int learn_more = 2131296293;
 			
 			// aapt resource value: 0x7f090024
-			public const int learn_more = 2131296292;
-			
-			// aapt resource value: 0x7f090023
-			public const int login = 2131296291;
-			
-			// aapt resource value: 0x7f090020
-			public const int notnow = 2131296288;
-			
-			// aapt resource value: 0x7f090028
-			public const int quantity = 2131296296;
-			
-			// aapt resource value: 0x7f09001d
-			public const int request_courier = 2131296285;
-			
-			// aapt resource value: 0x7f09002f
-			public const int second_contact = 2131296303;
-			
-			// aapt resource value: 0x7f090031
-			public const int send = 2131296305;
-			
-			// aapt resource value: 0x7f09002e
-			public const int sign_in_text = 2131296302;
-			
-			// aapt resource value: 0x7f09001e
-			public const int signin = 2131296286;
+			public const int login = 2131296292;
 			
 			// aapt resource value: 0x7f090021
-			public const int signing_in = 2131296289;
+			public const int notnow = 2131296289;
+			
+			// aapt resource value: 0x7f090029
+			public const int quantity = 2131296297;
+			
+			// aapt resource value: 0x7f09001e
+			public const int request_courier = 2131296286;
+			
+			// aapt resource value: 0x7f09001a
+			public const int request_courier_header = 2131296282;
+			
+			// aapt resource value: 0x7f090030
+			public const int second_contact = 2131296304;
+			
+			// aapt resource value: 0x7f090032
+			public const int send = 2131296306;
+			
+			// aapt resource value: 0x7f09002f
+			public const int sign_in_text = 2131296303;
 			
 			// aapt resource value: 0x7f09001f
-			public const int signup = 2131296287;
+			public const int signin = 2131296287;
+			
+			// aapt resource value: 0x7f090022
+			public const int signing_in = 2131296290;
+			
+			// aapt resource value: 0x7f090020
+			public const int signup = 2131296288;
 			
 			// aapt resource value: 0x7f090019
 			public const int sing_up_header = 2131296281;
@@ -2934,17 +2937,17 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f090013
 			public const int status_bar_notification_info_overflow = 2131296275;
 			
-			// aapt resource value: 0x7f09001b
-			public const int tab1 = 2131296283;
+			// aapt resource value: 0x7f09001c
+			public const int tab1 = 2131296284;
+			
+			// aapt resource value: 0x7f090028
+			public const int text = 2131296296;
 			
 			// aapt resource value: 0x7f090027
-			public const int text = 2131296295;
+			public const int title = 2131296295;
 			
-			// aapt resource value: 0x7f090026
-			public const int title = 2131296294;
-			
-			// aapt resource value: 0x7f090022
-			public const int version_number = 2131296290;
+			// aapt resource value: 0x7f090023
+			public const int version_number = 2131296291;
 			
 			static String()
 			{

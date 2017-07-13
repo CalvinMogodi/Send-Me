@@ -14,13 +14,18 @@ using SendMe.ViewModels;
 using Android.Graphics;
 using SendMe.Helpers;
 using SendMe.Models;
+using Android.Support.Design.Widget;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "Request Courier")]
+    [Activity(Label = "@string/request_courier_header",
+        LaunchMode = LaunchMode.SingleInstance,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait)]
     public class RequestCourierActivity : Activity
     {
         Button getQuoteButton;
+        AppBarLayout appBar;
         EditText email, phone, name;
         TextView message;
         Spinner vehiclebodytype, itemSize;
@@ -54,7 +59,10 @@ namespace SendMe.Droid.Activities
             name = FindViewById<EditText>(Resource.Id.requestCourier_etname);
             message = FindViewById<TextView>(Resource.Id.requestCourier_tvmessage);
             vehiclebodytype = FindViewById<Spinner>(Resource.Id.requestCourier_vehiclebodytype);
+            appBar = FindViewById<AppBarLayout>(Resource.Id.appbar);
 
+
+            
             requestCourierViewModel = new RequestCourierViewModel();
             getQuoteButton.Click += GetQuoteButton_Click;
 

@@ -14,7 +14,7 @@ namespace SendMe.Droid
             if (Toolbar != null)
             {
                 SetSupportActionBar(Toolbar);
-                SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+                SupportActionBar.SetDisplayHomeAsUpEnabled(false);
                 SupportActionBar.SetHomeButtonEnabled(true);
 
             }
