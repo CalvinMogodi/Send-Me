@@ -15,6 +15,9 @@ using Android.Graphics;
 using SendMe.Helpers;
 using SendMe.Models;
 using Android.Support.Design.Widget;
+using Java.Net;
+using Java.IO;
+using Org.Json;
 
 namespace SendMe.Droid.Activities
 {
@@ -29,7 +32,19 @@ namespace SendMe.Droid.Activities
         EditText email, phone, name;
         TextView message;
         Spinner vehiclebodytype, itemSize;
-        AutoCompleteTextView pickupLocation, dropLocation;
+        AutoCompleteTextView pickupLocation, dropLocation, autocompleteTextView;
+
+        private String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+        private String TYPE_AUTOCOMPLETE = "/autocomplete";
+        private String OUT_JSON = "/json";
+        private String API_KEY = "AIzaSyBxzMOzDddAIUKR3RlINgbhtTReEGCvEKI";
+
+        //private static string LOG_TAG = "Google Places Autocomplete";
+        //private static string PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+        //private static string TYPE_AUTOCOMPLETE = "/autocomplete";
+        //private static string OUT_JSON = "/json";
+        //private static string API_KEY = "AIzaSyCvXMXsHtLL2zCDR_wb6nhrW_iwO6xWy2g";
+
         public Toolbar Toolbar
         {
             get;
@@ -60,8 +75,6 @@ namespace SendMe.Droid.Activities
             message = FindViewById<TextView>(Resource.Id.requestCourier_tvmessage);
             vehiclebodytype = FindViewById<Spinner>(Resource.Id.requestCourier_vehiclebodytype);
             appBar = FindViewById<AppBarLayout>(Resource.Id.appbar);
-
-
             
             requestCourierViewModel = new RequestCourierViewModel();
             getQuoteButton.Click += GetQuoteButton_Click;
@@ -71,7 +84,7 @@ namespace SendMe.Droid.Activities
             var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.vehiclebodytypes_array, Android.Resource.Layout.SimpleSpinnerDropDownItem);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             vehiclebodytype.Adapter = adapter;
-            //vehiclebodytype.ItemSelected += VehiclebodytypeItemSelected;
+            vehiclebodytype.ItemSelected += VehiclebodytypeItemSelected;
 
             //set item size drop down
             itemSize = FindViewById<Spinner>(Resource.Id.requestCourier_ItemSize);
@@ -80,9 +93,155 @@ namespace SendMe.Droid.Activities
             itemSize.Adapter = itemSizeAdapter;
 
             pickupLocation = FindViewById<AutoCompleteTextView>(Resource.Id.requestCourier_actvpickup_location);
-            dropLocation = FindViewById<AutoCompleteTextView>(Resource.Id.requestCourier_actvpickup_location);
-            //pickupLocation.TextChanged += OnDDTouchEvent;
+            dropLocation = FindViewById<AutoCompleteTextView>(Resource.Id.requestCourier_actvdrop_location);
+
+            pickupLocation.TextChanged += PickupLocationAutocomplete;
+            dropLocation.TextChanged += DropLocationAutocomplete;
         }
+
+
+        public void VehiclebodytypeItemSelected(object sender, EventArgs e)
+        {
+            var selectedItem = vehiclebodytype.SelectedItem.ToString();
+            if (selectedItem == "Motorcycle" || selectedItem == "Passenger")
+                itemSize.Visibility = ViewStates.Gone;
+            else
+                itemSize.Visibility = ViewStates.Visible;
+        }
+        public void PickupLocationAutocomplete(object sender, EventArgs e)
+        {
+            string input = pickupLocation.Text.Trim();
+            if (input.Length > 1)
+            {
+
+           
+            List<String> resultList = null;
+            HttpURLConnection conn = null;
+            StringBuilder jsonResults = new StringBuilder();
+            try
+            {
+                if (Convert.ToInt32(Android.OS.Build.VERSION.SdkInt) > 9)
+                {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().PermitAll().Build();
+                    StrictMode.SetThreadPolicy(policy);
+                }
+
+                StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
+                sb.Append("?key=" + API_KEY);
+                sb.Append("&components=country:za");
+                sb.Append("&input=" + URLEncoder.Encode(input, "utf8"));
+
+                URL url = new URL(sb.ToString());
+                conn = (HttpURLConnection)url.OpenConnection();
+                conn.Connect();
+                InputStreamReader ist = new InputStreamReader(conn.InputStream);
+
+                int read;
+                char[] buff = new char[1024];
+                while ((read = ist.Read(buff)) != -1)
+                    jsonResults.Append(buff, 0, read);
+            }
+            catch (MalformedURLException error)
+            {
+
+            }
+            catch (IOException error)
+            {
+
+            }
+            finally
+            {
+                if (conn != null)
+                    conn.Disconnect();
+            }
+
+            try
+            {
+                JSONObject jsonObj = new JSONObject(jsonResults.ToString());
+                JSONArray predsJsonArray = jsonObj.GetJSONArray("predictions");
+
+                resultList = new List<String>(predsJsonArray.Length());
+                for (int i = 0; i < predsJsonArray.Length(); ++i)
+                    resultList.Add(predsJsonArray.GetJSONObject(i).GetString("description"));
+            }
+            catch (JSONException error)
+            {
+
+            }
+
+            string[] resultLists = resultList.ToArray();
+            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, resultLists);
+                pickupLocation.Adapter = autoCompleteAdapter;
+            }
+        }
+
+        public void DropLocationAutocomplete(object sender, EventArgs e)
+        {
+            string input = dropLocation.Text.Trim();
+            if (input.Length > 1)
+            {
+
+
+                List<String> resultList = null;
+                HttpURLConnection conn = null;
+                StringBuilder jsonResults = new StringBuilder();
+                try
+                {
+                    if (Convert.ToInt32(Android.OS.Build.VERSION.SdkInt) > 9)
+                    {
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().PermitAll().Build();
+                        StrictMode.SetThreadPolicy(policy);
+                    }
+
+                    StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
+                    sb.Append("?key=" + API_KEY);
+                    sb.Append("&components=country:za");
+                    sb.Append("&input=" + URLEncoder.Encode(input, "utf8"));
+
+                    URL url = new URL(sb.ToString());
+                    conn = (HttpURLConnection)url.OpenConnection();
+                    conn.Connect();
+                    InputStreamReader ist = new InputStreamReader(conn.InputStream);
+
+                    int read;
+                    char[] buff = new char[1024];
+                    while ((read = ist.Read(buff)) != -1)
+                        jsonResults.Append(buff, 0, read);
+                }
+                catch (MalformedURLException error)
+                {
+
+                }
+                catch (IOException error)
+                {
+
+                }
+                finally
+                {
+                    if (conn != null)
+                        conn.Disconnect();
+                }
+
+                try
+                {
+                    JSONObject jsonObj = new JSONObject(jsonResults.ToString());
+                    JSONArray predsJsonArray = jsonObj.GetJSONArray("predictions");
+
+                    resultList = new List<String>(predsJsonArray.Length());
+                    for (int i = 0; i < predsJsonArray.Length(); ++i)
+                        resultList.Add(predsJsonArray.GetJSONObject(i).GetString("description"));
+                }
+                catch (JSONException error)
+                {
+
+                }
+
+                string[] resultLists = resultList.ToArray();
+                ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, resultLists);
+                dropLocation.Adapter = autoCompleteAdapter;
+            }
+        }
+
 
         private void GetQuoteButton_Click(object sender, EventArgs e)
         {

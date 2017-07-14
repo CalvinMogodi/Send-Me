@@ -15,6 +15,10 @@ using SendMe.Model;
 using SendMe.Droid.Helpers;
 using SendMe.ViewModels;
 using Android.Graphics;
+using System.Globalization;
+using System.Threading;
+using Android.Telephony;
+using Java.Util;
 
 namespace SendMe.Droid
 {
@@ -111,6 +115,29 @@ namespace SendMe.Droid
             return vh;
         }
 
+        public static String getUserCountry(Context context)
+        {
+            try
+            {
+                TelephonyManager tm = (TelephonyManager)context.GetSystemService(Context.TelephonyService);
+                String simCountry = tm.SimCountryIso;
+                if (simCountry != null && simCountry.Length == 2)
+                { // SIM country code is available
+                    return simCountry.ToLower();
+                }
+                else 
+                { // device is not 3G (would be unreliable)
+                    String networkCountry = tm.NetworkCountryIso;
+                    if (networkCountry != null && networkCountry.Length == 2)
+                    { // network country code is available
+                        return networkCountry.ToLower();
+                    }
+                }
+            }
+            catch (Exception e) { }
+            return null;
+        }
+
         // Replace the contents of a view (invoked by the layout manager)
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
@@ -118,10 +145,14 @@ namespace SendMe.Droid
             Context mContext = Android.App.Application.Context;
             ImageManager imageManager = new ImageManager(mContext);
 
+            TelephonyManager tm = (TelephonyManager)mContext.GetSystemService(Context.TelephonyService);
+            String countryCode = String.Format("en-{0}", tm.SimCountryIso.ToUpper());
+            RegionInfo RegionInfo = new RegionInfo(new CultureInfo(countryCode, false).LCID);
+                        
             // Replace the contents of the view with that element
             var myHolder = holder as MyViewHolder;
-            myHolder.TextView.Text = quote.CourierName;
-            myHolder.DetailTextView.Text = String.Format("{0} - ({1})", quote.Price, quote.CourierKmDistance);
+            myHolder.DetailTextView.Text = quote.CourierName;
+            myHolder.TextView.Text = String.Format("{0} {1} - {2} KM", RegionInfo.CurrencySymbol, quote.Price.ToString("F"), quote.CourierKmDistance);
             //myHolder.ProfilePictureImageView.SetImageBitmap(imageManager.ConvertStringToBitMap(quote.CourierProfilePicture));
             Bitmap bMap = BitmapFactory.DecodeResource(mContext.Resources, Resource.Drawable.profile_generic);
             myHolder.ProfilePictureImageView.SetImageBitmap(bMap);
