@@ -30,7 +30,7 @@
     <item>Truck</item>
   </string-array>
   <string-array name="itemSize_array">
-    <item>Please Select Item Size</item>
+    <item>Select Item Size</item>
     <item>Normal Size</item>
     <item>More Items</item>
   </string-array>

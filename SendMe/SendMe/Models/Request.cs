@@ -18,9 +18,6 @@ namespace SendMe.Models
         [JsonProperty("fromLocation")]
         public Location FromLocation { get; set; }
 
-        [JsonProperty("totalKm")]
-        public double TotalKm { get; set; }
-
         [JsonProperty("email")]
         public string Email { get; set; }
 

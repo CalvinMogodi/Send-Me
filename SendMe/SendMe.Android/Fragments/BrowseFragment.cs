@@ -74,11 +74,11 @@ namespace SendMe.Droid
 
         private void Adapter_ItemClick(object sender, RecyclerClickEventArgs e)
         {
-            //var item = ViewModel.Items[e.Position];
-            //var intent = new Intent(Activity, typeof(BrowseItemDetailActivity));
+            var item = ViewModel.Quotes[e.Position];
+            var intent = new Intent(Activity, typeof(BrowseItemDetailActivity));
 
-            //intent.PutExtra("data", Newtonsoft.Json.JsonConvert.SerializeObject(item));
-            //Activity.StartActivity(intent);
+            intent.PutExtra("data", Newtonsoft.Json.JsonConvert.SerializeObject(item));
+            Activity.StartActivity(intent);
         }
         
         public void BecameVisible()
@@ -152,10 +152,8 @@ namespace SendMe.Droid
             // Replace the contents of the view with that element
             var myHolder = holder as MyViewHolder;
             myHolder.DetailTextView.Text = quote.CourierName;
-            myHolder.TextView.Text = String.Format("{0} {1} - {2} KM", RegionInfo.CurrencySymbol, quote.Price.ToString("F"), quote.CourierKmDistance);
-            //myHolder.ProfilePictureImageView.SetImageBitmap(imageManager.ConvertStringToBitMap(quote.CourierProfilePicture));
-            Bitmap bMap = BitmapFactory.DecodeResource(mContext.Resources, Resource.Drawable.profile_generic);
-            myHolder.ProfilePictureImageView.SetImageBitmap(bMap);
+            myHolder.TextView.Text = String.Format("{0} {1} - {2} KM", RegionInfo.CurrencySymbol, quote.Price.ToString("F"), quote.CourierKmDistance.ToString("F"));
+            myHolder.ProfilePictureImageView.SetImageBitmap(imageManager.ConvertStringToBitMap(quote.CourierProfilePicture));
         }
 
         public override int ItemCount => viewModel.Quotes.Count;

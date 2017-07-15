@@ -19,7 +19,7 @@ namespace SendMe.ViewModels
             Title = "Quotes";
             Quotes = new ObservableRangeCollection<Quote>();
             var task = ExecuteLoadQuotesCommand(request);
-            task.Wait();
+            //task.Wait();
         }
 
         public async Task ExecuteLoadQuotesCommand(Request request)
@@ -32,7 +32,7 @@ namespace SendMe.ViewModels
             try
             {
                 Quotes.Clear();
-                var quotes = MockedQuotes();
+                var quotes = MockedQuotesAsync(request);
             }
             catch (Exception ex)
             {
@@ -45,39 +45,10 @@ namespace SendMe.ViewModels
         }
 
 
-        private ObservableRangeCollection<Quote> MockedQuotes()
+        private async Task<ObservableRangeCollection<Quote>> MockedQuotesAsync(Request request)
         {
 
-            var quotes = new ObservableRangeCollection<Quote>(){
-                new Quote { Id = Guid.NewGuid(),
-                    CourierName = "Calvin Mogodi",
-                    CourierMobileNumber = "1234567",
-                    CourierKmDistance = 3.36m,
-                    Price = 100,
-                    CourierProfilePicture = ""
-                    },
-                 new Quote { Id = Guid.NewGuid(),
-                    CourierName = "Given N",
-                    CourierMobileNumber = "1234567",
-                    CourierKmDistance = 15.6m,
-                    Price = 515,
-                    CourierProfilePicture = ""
-                    },
-                  new Quote { Id = Guid.NewGuid(),
-                    CourierName = "Given N",
-                    CourierMobileNumber = "1234567",
-                    CourierKmDistance = 15.6m,
-                    Price = 515,
-                    CourierProfilePicture = ""
-                    },
-                   new Quote { Id = Guid.NewGuid(),
-                    CourierName = "Given N",
-                    CourierMobileNumber = "1234567",
-                    CourierKmDistance = 15.6m,
-                    Price = 515,
-                    CourierProfilePicture = ""
-                    },
-            };
+           var quotes = await DataStore.GetQuotesAsync(request);            
             Quotes = quotes;
             return quotes;
         }

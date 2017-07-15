@@ -356,8 +356,8 @@ namespace SendMe.Droid.Activities
 
         private void GetQuoteButton_Click(object sender, EventArgs e)
         {
-            //if (!ValidateForm())
-            //    return;
+            if (!ValidateForm())
+                return;
 
             string pickupLocationPlaceId = PickUpLocations.FirstOrDefault(l => l.Description.Trim() == pickupLocation.Text.Trim()).PlaceId;
             string dropLocationPlaceId = DropLocations.FirstOrDefault(l => l.Description.Trim() == dropLocation.Text.Trim()).PlaceId;
@@ -365,21 +365,12 @@ namespace SendMe.Droid.Activities
             var fromLocation = GetLocationDetails(pickupLocationPlaceId, pickupLocation.Text.Trim());
             var tolocation = GetLocationDetails(dropLocationPlaceId, pickupLocation.Text.Trim());
 
-            var km = kmDistance(fromLocation.Latitude, fromLocation.Longitude, tolocation.Latitude, tolocation.Longitude);
-
-             
-                double d = Math.Acos(
-                   (Math.Sin(fromLocation.Latitude) * Math.Sin(tolocation.Latitude)) +
-                   (Math.Cos(fromLocation.Latitude) * Math.Cos(tolocation.Latitude))
-                   * Math.Cos(tolocation.Longitude - fromLocation.Longitude));
-
-               var dd = 6378137 * d;
-           
-            SendMe.Models.Request request = new SendMe.Models.Request()
+            Request request = new Request()
             {
                 FromLocation = fromLocation,
                 Tolocation = tolocation,
-                PackageSize = name.Text,
+                PackageSize = itemSize.SelectedItem.ToString(),
+                VehicleBodyType = vehiclebodytype.SelectedItem.ToString(),
                 MobileNumber = phone.Text,
                 Email = email.Text,
                 Name = name.Text,
@@ -393,16 +384,26 @@ namespace SendMe.Droid.Activities
         {
             Validations validation = new Validations();
             Android.Graphics.Drawables.Drawable icon = Resources.GetDrawable(Resource.Drawable.error);
-            icon.SetBounds(0, 0, 0, 0);
+            icon.SetBounds(0, 0, icon.IntrinsicWidth, icon.IntrinsicHeight);
 
             bool formIsValid = true;
 
-            //if (vehiclebodytype.Text == "Select Vehicle Body Type")
-            //{
-            //    MessageDialog messageDialog = new MessageDialog();
-            //    messageDialog.SendToast("Please Select Vehicle Body Type");
-            //    formIsValid = false;
-            //}
+            if (vehiclebodytype.SelectedItem.ToString() == "Select Vehicle Body Type")
+            {
+                MessageDialog messageDialog = new MessageDialog();
+                messageDialog.SendToast("Please Select Vehicle Body Type");
+                formIsValid = false;
+            }
+
+            if (itemSize.Visibility == ViewStates.Visible)
+            {
+                if (itemSize.SelectedItem.ToString() == "Select Item Size")
+                {
+                    MessageDialog messageDialog = new MessageDialog();
+                    messageDialog.SendToast("Please Select Item Size");
+                    formIsValid = false;
+                }
+            }            
 
             if (!validation.IsValidEmail(email.Text))
             {
