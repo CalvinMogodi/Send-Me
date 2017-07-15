@@ -14,7 +14,7 @@ namespace SendMe
 
         public static void Initialize()
         {
-            ServiceLocator.Instance.Register<IDataStore<Item, User>, MockDataStore>();
+            ServiceLocator.Instance.Register<IDataStore<Item, User, Respond, Quote, Request>, MockDataStore>();
         }
     }
 }

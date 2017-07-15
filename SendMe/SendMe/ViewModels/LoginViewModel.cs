@@ -21,6 +21,10 @@ namespace SendMe.ViewModels
         {
             var _user = user as User;
             User = await DataStore.Login(_user);
+            if (User != null)
+                IsAuthenticated = true;
+            else
+                IsAuthenticated = false;
         }
     }
 }

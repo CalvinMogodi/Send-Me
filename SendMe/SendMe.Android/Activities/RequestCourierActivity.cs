@@ -18,6 +18,7 @@ using Android.Support.Design.Widget;
 using Java.Net;
 using Java.IO;
 using Org.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SendMe.Droid.Activities
 {
@@ -33,6 +34,8 @@ namespace SendMe.Droid.Activities
         TextView message;
         Spinner vehiclebodytype, itemSize;
         AutoCompleteTextView pickupLocation, dropLocation, autocompleteTextView;
+        List<Location> PickUpLocations = new List<Location>();
+        List<Location> DropLocations = new List<Location>();
 
         private String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
         private String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -97,6 +100,7 @@ namespace SendMe.Droid.Activities
 
             pickupLocation.TextChanged += PickupLocationAutocomplete;
             dropLocation.TextChanged += DropLocationAutocomplete;
+            itemSize.Visibility = ViewStates.Gone;
         }
 
 
@@ -128,7 +132,7 @@ namespace SendMe.Droid.Activities
 
                 StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
                 sb.Append("?key=" + API_KEY);
-                sb.Append("&components=country:za");
+                sb.Append("&libraries=places");
                 sb.Append("&input=" + URLEncoder.Encode(input, "utf8"));
 
                 URL url = new URL(sb.ToString());
@@ -161,8 +165,18 @@ namespace SendMe.Droid.Activities
                 JSONArray predsJsonArray = jsonObj.GetJSONArray("predictions");
 
                 resultList = new List<String>(predsJsonArray.Length());
+                PickUpLocations = new List<Location>();
                 for (int i = 0; i < predsJsonArray.Length(); ++i)
+                {
+
+                    Location location = new Location()
+                    {
+                        Description = predsJsonArray.GetJSONObject(i).GetString("description"),
+                        PlaceId = predsJsonArray.GetJSONObject(i).GetString("place_id"),
+                    };
+                    PickUpLocations.Add(location);
                     resultList.Add(predsJsonArray.GetJSONObject(i).GetString("description"));
+                }                    
             }
             catch (JSONException error)
             {
@@ -173,6 +187,81 @@ namespace SendMe.Droid.Activities
             ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, resultLists);
                 pickupLocation.Adapter = autoCompleteAdapter;
             }
+        }
+
+        public Location GetLocationDetails(string placeId, string description)
+        {
+            Location location = new Location();
+            HttpURLConnection conn = null;
+            StringBuilder jsonResults = new StringBuilder();
+            try
+            {
+                if (Convert.ToInt32(Android.OS.Build.VERSION.SdkInt) > 9)
+                {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().PermitAll().Build();
+                    StrictMode.SetThreadPolicy(policy);
+                }
+
+                StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json");
+                sb.Append("?key=" + API_KEY);
+                sb.Append("&placeid=" + placeId);
+
+
+                URL url = new URL(sb.ToString());
+
+                conn = (HttpURLConnection)url.OpenConnection();
+                conn.Connect();
+                InputStreamReader un = new InputStreamReader(conn.InputStream);
+
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = un.Read(buff)) != -1)
+                {
+                    jsonResults.Append(buff, 0, read);
+                }
+            }
+            catch (MalformedURLException e)
+            {
+               
+            }
+            catch (IOException e)
+            {
+                
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Disconnect();
+                }
+            }
+
+            try
+            {
+
+                // Create a JSON object hierarchy from the results
+                JSONObject jsonObj = new JSONObject(jsonResults.ToString());
+                JObject jObject = JObject.Parse(jsonObj.ToString());
+                JToken result = jObject["result"];
+                JToken geometryObject = result["geometry"];
+                JToken locationObject = geometryObject["location"];
+                var longitude = (string)locationObject["lng"];
+                var latitude = (string)locationObject["lat"];
+                location = new Location()
+                    {
+                        Longitude = Convert.ToDouble(longitude),
+                        Latitude = Convert.ToDouble(latitude),
+                        Description = description,
+                        PlaceId = placeId
+                };
+               
+            }
+            catch (JSONException e)
+            {
+            }
+
+            return location;
         }
 
         public void DropLocationAutocomplete(object sender, EventArgs e)
@@ -195,7 +284,7 @@ namespace SendMe.Droid.Activities
 
                     StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
                     sb.Append("?key=" + API_KEY);
-                    sb.Append("&components=country:za");
+                    sb.Append("&libraries=places");
                     sb.Append("&input=" + URLEncoder.Encode(input, "utf8"));
 
                     URL url = new URL(sb.ToString());
@@ -228,8 +317,18 @@ namespace SendMe.Droid.Activities
                     JSONArray predsJsonArray = jsonObj.GetJSONArray("predictions");
 
                     resultList = new List<String>(predsJsonArray.Length());
+                    DropLocations = new List<Location>();
                     for (int i = 0; i < predsJsonArray.Length(); ++i)
+                    {
+
+                        Location location = new Location()
+                        {
+                            Description = predsJsonArray.GetJSONObject(i).GetString("description"),
+                            PlaceId = predsJsonArray.GetJSONObject(i).GetString("place_id"),
+                        };
+                        DropLocations.Add(location);
                         resultList.Add(predsJsonArray.GetJSONObject(i).GetString("description"));
+                    }
                 }
                 catch (JSONException error)
                 {
@@ -243,33 +342,43 @@ namespace SendMe.Droid.Activities
         }
 
 
+
+        private decimal kmDistance(double lat1, double lon1, double lat2, double lon2)
+        {// generally used geo measurement function: 
+            double R = 6378.137;            // Radius of earth in KM 
+            double dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+            double dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double d = R * c;
+            return (decimal)d; // Km returned 
+        }
+
         private void GetQuoteButton_Click(object sender, EventArgs e)
         {
             //if (!ValidateForm())
             //    return;
 
-            Point fromLocation = new Point()
-            {
-                X = 69,
-                Y = 34,
-            };
-            Point tolocation = new Point()
-            {
-                X = 20,
-                Y = 41,
-            };
+            string pickupLocationPlaceId = PickUpLocations.FirstOrDefault(l => l.Description.Trim() == pickupLocation.Text.Trim()).PlaceId;
+            string dropLocationPlaceId = DropLocations.FirstOrDefault(l => l.Description.Trim() == dropLocation.Text.Trim()).PlaceId;
 
+            var fromLocation = GetLocationDetails(pickupLocationPlaceId, pickupLocation.Text.Trim());
+            var tolocation = GetLocationDetails(dropLocationPlaceId, pickupLocation.Text.Trim());
+
+            var km = kmDistance(fromLocation.Latitude, fromLocation.Longitude, tolocation.Latitude, tolocation.Longitude);
+
+             
+                double d = Math.Acos(
+                   (Math.Sin(fromLocation.Latitude) * Math.Sin(tolocation.Latitude)) +
+                   (Math.Cos(fromLocation.Latitude) * Math.Cos(tolocation.Latitude))
+                   * Math.Cos(tolocation.Longitude - fromLocation.Longitude));
+
+               var dd = 6378137 * d;
+           
             SendMe.Models.Request request = new SendMe.Models.Request()
             {
-                FromLocation = new Models.Location() {
-                    Longitude = fromLocation.Y,
-                    Latitude = fromLocation.X,
-                       },
-                Tolocation = new Models.Location()
-                {
-                    Longitude = tolocation.Y,
-                    Latitude = tolocation.X,
-                },
+                FromLocation = fromLocation,
+                Tolocation = tolocation,
                 PackageSize = name.Text,
                 MobileNumber = phone.Text,
                 Email = email.Text,

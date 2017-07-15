@@ -28,6 +28,7 @@ namespace SendMe.Droid
         //ViewPager pager;
         TabsAdapter adapter;
         AlertDialog dialog;
+        ProgressBar progressBar;
         Button rcButton, acButton, loginButton, loginCancelButton;
         EditText username, password;
         bool IsAuthenticated = false;
@@ -94,9 +95,13 @@ namespace SendMe.Droid
             password = dialog.FindViewById<EditText>(Resource.Id.dialog_login_password);
             message = dialog.FindViewById<TextView>(Resource.Id.dialog_login_tvmessage);
             forgotpassword = dialog.FindViewById<TextView>(Resource.Id.login_forgot_password);
+            progressBar = dialog.FindViewById<ProgressBar>(Resource.Id.progress_bar);
             loginButton.Click += LoginButton_Click;
             loginCancelButton.Click += LoginCancelButton_Click;
             forgotpassword.Click += ForgotPassword_Click;
+            progressBar.Indeterminate = true;
+            progressBar.Visibility = ViewStates.Gone;
+
             LoginViewModel = new LoginViewModel();
         }
 
@@ -107,13 +112,16 @@ namespace SendMe.Droid
             StartActivity(intent);
         }
 
-        private void LoginButton_Click(object sender, EventArgs e)
+        private async void LoginButton_Click(object sender, EventArgs e)
         {
             courierIsActive.Checked = IsAuthenticated;
             if (!ValidateForm())
-            {
                 return;
-            }
+
+            progressBar.Visibility = ViewStates.Visible;
+            loginButton.Enabled = false;
+            loginCancelButton.Enabled = false;
+            forgotpassword.Enabled = false;
 
             message.Text = "";
             var _user = new User()
@@ -133,7 +141,8 @@ namespace SendMe.Droid
                     Longitude = currentLocation.Longitude,
                 };
             }
-            //LoginViewModel.LoginUser(_user);
+
+            await LoginViewModel.LoginUserAsync(_user);
 
             if (LoginViewModel.IsAuthenticated)
             {
@@ -144,6 +153,10 @@ namespace SendMe.Droid
             else
             {
                 message.Text = "Invaild username or password";
+                loginButton.Enabled = true;
+                loginCancelButton.Enabled = true;
+                progressBar.Visibility = ViewStates.Gone;
+                forgotpassword.Enabled = false;
                 dialog.Show();
             }
             

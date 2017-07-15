@@ -14,15 +14,17 @@ namespace SendMe.ViewModels
 
         public bool IsSignUp { get; set; }
 
+        public Respond Respond { get; set; }
+
         public SignUpViewModel()
         {
             Title = "Sign Up";
         }
 
-        public void SignUpUser(User user)
+        public async Task SignUpUser(User user)
         {
             var _user = user as User;
-           // IsSignUp = DataStore.SignUpUserAsync(_user);
+            Respond = await DataStore.AddUserAsync(_user);
         }
     }
 }

@@ -7,27 +7,35 @@ using SendMe.Model;
 using Firebase.Xamarin.Database;
 using SendMe.Models;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using System.Collections.Concurrent;
+using Firebase.Xamarin.Database.Query;
 
 namespace SendMe.Services
 {
-    public class MockDataStore : IDataStore<Item, User>
+    public class MockDataStore : IDataStore<Item, User, Respond, Quote, Request>
     {
         bool isInitialized;
         List<Item> items;
         List<User> users;
         FirebaseClient firebase = new FirebaseClient("https://sendme-7253e.firebaseio.com/");
+        private ConcurrentDictionary<string, User> productDictionary;
 
         public async Task<User> Login(User user)
         {
             User userDetails = null;
+            productDictionary = new ConcurrentDictionary<string, User>();
             try
             {
                 var users = await firebase.Child("User").OnceAsync<User>();
                 foreach (var item in users)
-                {
+                {                   
                     item.Object.Id = item.Key;
+                    while (!productDictionary.TryAdd(item.Object.Id, item.Object)) ;
                     if (item.Object.Password == user.Password && item.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim())
                     {
+                        await firebase.Child("User").Child(item.Object.Id).Child("isActive").PutAsync(true);
+                        await firebase.Child("User").Child(item.Object.Id).Child("currentLocation").PutAsync(user.CurrentLocation);
                         userDetails = item.Object;
                         break;
                     }
@@ -41,26 +49,84 @@ namespace SendMe.Services
             }
         }
 
-        public bool UpdateUser(User user)
+        public async Task<Respond> AddUserAsync(User user)
         {
-            bool IsUpdated = false;
+            Respond respond = new Respond();
 
-            //User thisUser = users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
-            //if (thisUser != null)
-            //{
-            //    thisUser.IsActive = true;
-            //    thisUser.CurrentLocation = user.CurrentLocation;
-            //}
-            return IsUpdated;
+            try {               
+                var users = await firebase.Child("User").OnceAsync<User>();
+                var thisUser = users.FirstOrDefault(u => u.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim());
+                if (thisUser != null)
+                {
+                    respond.ErrorOccurred = true;
+                    respond.IsSuccessful = true;
+                    respond.Error = new Error()
+                    {
+                        UserExist = true,
+                        Message = "Username already exist.",
+                    };
+                }
+                else {
+                    respond.ErrorOccurred = false;
+                    respond.IsSuccessful = true;
+                    await firebase.Child("User").PostAsync(user);
+                    await Task.FromResult(true);
+                }
+                   
+            }
+            catch (Exception ex)
+            {
+                respond.ErrorOccurred = true;
+                respond.IsSuccessful = true;
+                respond.Error = new Error()
+                {
+                    DatabaseError = true,
+                    Message = "Error Occurred: Please try again.",
+                };
+
+                return respond;
+            }
+
+            return respond;
+        }
+
+        public async Task<Respond> UpdateUser(User user)
+        {
+            Respond respond = new Respond();
+            productDictionary = new ConcurrentDictionary<string, User>();
+
+            try
+            {
+                firebase.Child("User").AsObservable<User>().Where(u => !productDictionary.ContainsKey(u.Object.Id) && u.EventType == Firebase.Xamarin.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                .Subscribe(User =>
+                {
+                    if (User.EventType == Firebase.Xamarin.Database.Streaming.FirebaseEventType.InsertOrUpdate)
+                    {
+                        while (!productDictionary.TryAdd(User.Object.Id, User.Object)) ;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                respond.ErrorOccurred = true;
+                respond.IsSuccessful = true;
+                respond.Error = new Error()
+                {
+                    DatabaseError = true,
+                    Message = "Error Occurred: Please try again.",
+                };
+
+                return respond;
+            }
+
+            return respond;
         }
 
         public async Task<IEnumerable<Quote>> GetQuotesAsync(Request request)
         {
 
             ObservableCollection<Quote> quotes = new ObservableCollection<Quote>();
-
-            MockedCouriers();
-
+            
             if (users != null)
             {
                 IEnumerable<User> couriers = users.Where(u => u.UserTypeId == 3);
@@ -68,11 +134,11 @@ namespace SendMe.Services
                 {
                     decimal thisKmDistance = kmDistance(request.FromLocation.Latitude, request.Tolocation.Latitude, request.FromLocation.Longitude, request.Tolocation.Longitude);
                     decimal courierKmDistance = kmDistance(request.FromLocation.Latitude, user.CurrentLocation.Latitude, request.FromLocation.Longitude, user.CurrentLocation.Longitude);
-                    decimal price = thisKmDistance * Convert.ToDecimal(user.CourierPrice.PricePerKM);
+                    decimal price = thisKmDistance * Convert.ToDecimal(user.Courier.PricePerKM);
                     switch (request.PackageSize)
                     {
                         case "More Items":
-                            price = price + Convert.ToDecimal(user.CourierPrice.ExtraCharges);
+                            price = price + Convert.ToDecimal(user.Courier.ExtraCharges);
                             break;
                     }
 
@@ -100,125 +166,6 @@ namespace SendMe.Services
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             double d = R * c;
             return (decimal)d; // Km returned 
-        }
-
-        //To Be Removed
-        public async Task<bool> AddItemAsync(Item item)
-        {
-            await InitializeAsync();
-
-            items.Add(item);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<bool> UpdateItemAsync(Item item)
-        {
-            await InitializeAsync();
-
-            var _item = items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
-            items.Remove(_item);
-            items.Add(item);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<bool> DeleteItemAsync(Item item)
-        {
-            await InitializeAsync();
-
-            var _item = items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
-            items.Remove(_item);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<Item> GetItemAsync(string id)
-        {
-            await InitializeAsync();
-
-            return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
-        }
-
-        public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
-        {
-            await InitializeAsync();
-
-            return await Task.FromResult(items);
-        }
-
-        public Task<bool> PullLatestAsync()
-        {
-            return Task.FromResult(true);
-        }
-
-
-        public Task<bool> SyncAsync()
-        {
-            return Task.FromResult(true);
-        }
-
-        public async Task InitializeAsync()
-        {
-            if (isInitialized)
-                return;
-
-            items = new List<Item>();
-            var _items = new List<Item>
-            {
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Buy some cat food", Description="The cats are hungry"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Learn F#", Description="Seems like a functional idea"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Learn to play guitar", Description="Noted"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Buy some new candles", Description="Pine and cranberry for that winter feel"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Complete holiday shopping", Description="Keep it a secret!"},
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Finish a todo list", Description="Done"},
-            };
-
-            foreach (Item item in _items)
-            {
-                items.Add(item);
-            }
-
-            isInitialized = true;
-        }
-
-        private void MockedCouriers()
-        {
-
-            users = new List<User>();
-            var _users = new List<User>
-            {
-                new User { Id = Guid.NewGuid().ToString(),
-                    DisplayName = "Calvin Mogodi",
-                    Password = "1234567", Username="calvin@gmail.com",
-                    UserTypeId = 3,
-                    CourierPrice = new CourierPrice(){
-                        PricePerKM = 100,
-                        MobileNumber = "0761234568",
-                        VehicleBodyTypes = new List<string>(){"",""},
-                        Courier = new User(){ },
-                        ExtraCharges = 90,
-                    }
-                    },
-                 new User { Id = Guid.NewGuid().ToString(),
-                    DisplayName = "Given N",
-                    Password = "1234567", Username="given@gmail.com",
-                    UserTypeId = 3,
-                    CourierPrice = new CourierPrice(){
-                        PricePerKM = 515,
-                        MobileNumber = "0632589632",
-                        VehicleBodyTypes = new List<string>(){"",""},
-                        Courier = new User(){ },
-                        ExtraCharges = 50,
-                    }
-                    },
-            };
-
-            foreach (User user in _users)
-            {
-                users.Add(user);
-            }
-
         }
     }
 }

@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace SendMe.Models
 {
-    public class CourierPrice
+    public class Courier
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("courierId")]
         public string CourierId { get; set; }
-
-        [JsonProperty("courier")]
-        public User Courier { get; set; }
 
         [JsonProperty("mobileNumber")]
         public string MobileNumber { get; set; }

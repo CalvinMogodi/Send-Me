@@ -45,7 +45,7 @@ namespace SendMe.Droid.Activities
             Initialize();
         }
 
-        private void SignUpButton_Click(object sender, EventArgs e)
+        private async void SignUpButton_Click(object sender, EventArgs e)
         {
             if (!ValidateForm())
                 return;
@@ -60,7 +60,7 @@ namespace SendMe.Droid.Activities
                 Password = password.Text.Trim(),
                 UserTypeId = 3,
                 ProfilePicture = Logo,
-                CourierPrice = new CourierPrice()
+                Courier = new Courier()
                 {
                     VehicleBodyTypes = mSelectedItems,
                     MobileNumber = courierMobileNumber.Text.Trim(),
@@ -69,20 +69,17 @@ namespace SendMe.Droid.Activities
                 },
             };
             
-            ViewModel.SignUpUser(_user);
-            if (ViewModel.IsSignUp)
+           await ViewModel.SignUpUser(_user);
+            if (ViewModel.Respond.ErrorOccurred)
+                message.Text = ViewModel.Respond.Error.Message;
+            else
             {
                 messageDialog.SendToast("You are now registered to provide your service, Login to start making money");
                 Finish();
             }
-               
-            else
-                message.Text = "Unable to sign you up, please try again";
-
             messageDialog.HideLoading();
         }
-
-
+        
         private bool ValidateForm()
         {
             Validations validation = new Validations();
@@ -134,24 +131,23 @@ namespace SendMe.Droid.Activities
                 courierMobileNumber.SetError("Invaild phone number", icon);
                 FormIsValid = false;
             }
-            
-                if (!validation.IsRequired(pricePerKM.Text))
-                {
-                    pricePerKM.SetError("This field is required", icon);
-                    FormIsValid = false;
-                }
-                if (!validation.IsRequired(pricePerKM.Text))
-                {
-                    pricePerKM.SetError("This field is required", icon);
-                    FormIsValid = false;
-                }
-                if (!validation.IsRequired(extraCharges.Text))
-                {
-                    extraCharges.SetError("This field is required", icon);
-                    FormIsValid = false;
-                }
-           
+            if (!validation.IsRequired(pricePerKM.Text))
+            {
+                pricePerKM.SetError("This field is required", icon);
+                FormIsValid = false;
+            }
 
+            if (!validation.IsRequired(displayName.Text))
+            {
+                displayName.SetError("This field is required", icon);
+                FormIsValid = false;
+            }
+            
+            if (!validation.IsRequired(extraCharges.Text))
+            {
+                extraCharges.SetError("This field is required", icon);
+                FormIsValid = false;
+            }  
             return FormIsValid;
         }
 
@@ -179,8 +175,6 @@ namespace SendMe.Droid.Activities
             vehiclebodytype.Touch += OnVehiclebodytype_TextChanged;
             var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.choosevehiclebodytypes, Android.Resource.Layout.SimpleSpinnerDropDownItem);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-           // vehiclebodytype.Adapter = adapter;
-           // vehiclebodytype.Touch += OnVehiclebodytype_TextChanged;
             profilePicture.Click += SelectProfilePicture_Click;
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -225,18 +219,6 @@ namespace SendMe.Droid.Activities
                 mSelectedItems = selectedItems;
 
                 vehiclebodytypeDialog.Cancel();
-                //for (int i = 0; i < items.Length; i++)
-                //{                   
-                //    var isChecked = sads.Get(i);
-                //    if (isChecked)
-                //    {                       
-                //        var fd = items.ElementAt(i);
-                //        selectedItems.Add(fd);
-                //    }                   
-                //}
-                
-                //mSelectedItems = selectedItems;
-                //vehiclebodytypeDialog.Cancel();
             });
             vehiclebodytypeDialog = builder.Create();
 

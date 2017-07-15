@@ -37,7 +37,7 @@ namespace SendMe.Models
         [JsonProperty("userType")]
         public UserType UserType { get; set; }
 
-        [JsonProperty("courierPrice")]
-        public CourierPrice CourierPrice { get; set; }
+        [JsonProperty("courier")]
+        public Courier Courier { get; set; }
     }
 }

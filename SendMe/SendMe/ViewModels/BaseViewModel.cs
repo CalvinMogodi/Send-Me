@@ -12,7 +12,7 @@ namespace SendMe.ViewModel
         /// <summary>
         /// Get the azure service instance
         /// </summary>
-        public IDataStore<Item, User> DataStore => ServiceLocator.Instance.Get<IDataStore<Item, User>>();
+        public IDataStore<Item, User, Respond, Quote, Request> DataStore => ServiceLocator.Instance.Get<IDataStore<Item, User, Respond, Quote, Request>>();
 
         bool isBusy = false;
         public bool IsBusy
