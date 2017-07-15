@@ -48,7 +48,31 @@ namespace SendMe.Services
                 return userDetails;
             }
         }
-
+        
+        public async Task Logout(User user)
+        {
+            User userDetails = null;
+            productDictionary = new ConcurrentDictionary<string, User>();
+            try
+            {
+                var users = await firebase.Child("User").OnceAsync<User>();
+                foreach (var item in users)
+                {
+                    item.Object.Id = item.Key;
+                    while (!productDictionary.TryAdd(item.Object.Id, item.Object)) ;
+                    if (item.Object.Password == user.Password && item.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim())
+                    {
+                        await firebase.Child("User").Child(item.Object.Id).Child("isActive").PutAsync(false);
+                        await firebase.Child("User").Child(item.Object.Id).Child("currentLocation").PutAsync(user.CurrentLocation);
+                        break;
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         public async Task<Respond> AddUserAsync(User user)
         {
             Respond respond = new Respond();

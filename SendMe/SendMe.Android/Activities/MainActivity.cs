@@ -43,6 +43,7 @@ namespace SendMe.Droid
             rcButton = FindViewById<Button>(Resource.Id.main_requestCourier);
             acButton = FindViewById<Button>(Resource.Id.main_activateCourier);
             courierIsActive = FindViewById<Switch>(Resource.Id.main_switchActivateCourier);
+            courierIsActive.Click += SwitchActivateCourier_Click;
 
             rcButton.Click += RCButton_Click;
             acButton.Click += ACButton_Click;
@@ -112,6 +113,22 @@ namespace SendMe.Droid
             StartActivity(intent);
         }
 
+        public void SwitchActivateCourier_Click(object sender, EventArgs e) {
+            if (courierIsActive.Checked)
+            {
+                ACButton_Click(sender, e);
+            }
+            else {
+                courierIsActive.Checked = false;
+                if (LoginViewModel != null)
+                    {
+                        if (LoginViewModel.User != null)
+                        {
+                            LoginViewModel.LogoutUserAsync(LoginViewModel.User);
+                        }
+                    }
+            }
+        }
         private async void LoginButton_Click(object sender, EventArgs e)
         {
             courierIsActive.Checked = IsAuthenticated;

@@ -10,6 +10,6 @@ namespace SendMe.Services
         Task<R> UpdateUser(U user);
         Task<R> AddUserAsync(U user);
         Task<IEnumerable<Q>> GetQuotesAsync(UR request);
-
+        Task Logout(User user);
     }
 }

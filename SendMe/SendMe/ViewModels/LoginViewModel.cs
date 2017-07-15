@@ -26,5 +26,13 @@ namespace SendMe.ViewModels
             else
                 IsAuthenticated = false;
         }
+
+        public async Task LogoutUserAsync(User user)
+        {
+            var _user = user as User;
+            DataStore.Logout(_user);            
+        }
+
+        
     }
 }
