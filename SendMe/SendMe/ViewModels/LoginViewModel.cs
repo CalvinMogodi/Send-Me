@@ -33,6 +33,14 @@ namespace SendMe.ViewModels
             DataStore.Logout(_user);            
         }
 
+        public async Task ChangePasswordAsync(User user)
+        {
+            var _user = user as User;
+            Respond = await DataStore.ChangePasswordAsync(_user);
+        }
+
         
+
+
     }
 }

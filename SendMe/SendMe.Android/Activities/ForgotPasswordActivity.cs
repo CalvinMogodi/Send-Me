@@ -47,15 +47,15 @@ namespace SendMe.Droid.Activities
                 Password = password.Text,
             };
 
-           // await ViewModel.ChangePasswordAsync(_user);
+            await ViewModel.ChangePasswordAsync(_user);
 
-            if (ViewModel.IsAuthenticated)
-            {
-                Intent intent = new Intent(this, typeof(MainActivity));
-                StartActivity(intent);
-            }
+            if (ViewModel.Respond.ErrorOccurred)
+                message.Text = ViewModel.Respond.Error.Message;
             else
-                message.Text = "Invaild username";
+            {
+                messageDialog.SendToast("Password is changed successfully.");
+                Finish();
+            }
 
             messageDialog.HideLoading();
         }

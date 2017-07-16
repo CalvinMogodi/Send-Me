@@ -12,9 +12,7 @@ namespace SendMe.ViewModels
     {
         public User User { get; set; }
 
-        public bool IsSignUp { get; set; }
-
-        public Respond Respond { get; set; }
+        public bool IsSignUp { get; set; }       
 
         public SignUpViewModel()
         {

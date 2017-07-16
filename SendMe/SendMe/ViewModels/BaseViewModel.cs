@@ -14,6 +14,8 @@ namespace SendMe.ViewModel
         /// </summary>
         public IDataStore<Item, User, Respond, Quote, Request> DataStore => ServiceLocator.Instance.Get<IDataStore<Item, User, Respond, Quote, Request>>();
 
+        public Respond Respond { get; set; }
+
         bool isBusy = false;
         public bool IsBusy
         {

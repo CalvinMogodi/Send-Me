@@ -45,7 +45,53 @@ namespace SendMe.Services
                 return userDetails;
             }
         }
-        
+
+        public async Task<Respond> ChangePasswordAsync(User user)
+        {
+            Respond respond = new Respond();
+            bool passwordChaned = false;
+            try
+            {
+                var users = await firebase.Child("User").OnceAsync<User>();
+                foreach (var item in users)
+                {
+                    if (item.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim())
+                    {
+                        item.Object.Id = item.Key;
+                        respond.ErrorOccurred = false;
+                        respond.IsSuccessful = true;
+                        await firebase.Child("User").Child(item.Object.Id).Child("password").PutAsync(user.Password);
+                        passwordChaned = true;
+                        break;
+                    }
+                }
+
+                if (!passwordChaned)
+                {
+                    respond.ErrorOccurred = true;
+                    respond.IsSuccessful = true;
+                    respond.Error = new Error()
+                    {
+                        UserExist = true,
+                        Message = "Username does not exist.",
+                    };
+                }
+
+                return respond;
+            }
+            catch (Exception ex)
+            {
+                respond.ErrorOccurred = true;
+                respond.IsSuccessful = true;
+                respond.Error = new Error()
+                {
+                    DatabaseError = true,
+                    Message = "Error Occurred: Please try again.",
+                };
+                return respond;
+            }
+        }
+
         public async Task Logout(User user)
         {
             User userDetails = null;
@@ -107,7 +153,6 @@ namespace SendMe.Services
                     DatabaseError = true,
                     Message = "Error Occurred: Please try again.",
                 };
-
                 return respond;
             }
 
