@@ -68,6 +68,11 @@ namespace SendMe.Services
             {
             }
         }
+
+        public void SaveQuoteRequest(QuoteRequest quoteRequest)
+        {
+            firebase.Child("QuoteRequest").PostAsync(quoteRequest);
+        }
         public async Task<Respond> AddUserAsync(User user)
         {
             Respond respond = new Respond();
@@ -114,10 +119,7 @@ namespace SendMe.Services
             ObservableRangeCollection<Quote> quotes = new ObservableRangeCollection<Quote>();
             try
             {
-                //if (isInitialized)
-                //{
-                    isInitialized = true;
-                    var couriers = await firebase.Child("User").OnceAsync<User>();
+                var couriers = await firebase.Child("User").OnceAsync<User>();
                     foreach (var user in couriers)
                     {
                         if (user.Object.IsActive && user.Object.Courier.VehicleBodyTypes.Contains(request.VehicleBodyType.ToString()))
@@ -143,12 +145,14 @@ namespace SendMe.Services
                                     CourierProfilePicture = user.Object.ProfilePicture,
                                 };
 
+                            if (quote.CourierKmDistance <= 50)
+                            {
                                 quotes.Add(quote);
-                                isInitialized = true;
+                            }
+                               
                             }
                         }
                     }
-                //}
                 return await Task.FromResult(quotes);
             }
             catch (Exception ex)

@@ -12,5 +12,6 @@ namespace SendMe.Services
         Task<R> AddUserAsync(U user);
         Task<ObservableRangeCollection<Q>> GetQuotesAsync(UR request);
         Task Logout(User user);
+        void SaveQuoteRequest(QuoteRequest quoteRequest);
     }
 }

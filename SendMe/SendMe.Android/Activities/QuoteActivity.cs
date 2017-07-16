@@ -49,6 +49,7 @@ namespace SendMe.Droid.Activities
                 var contactsListView = FindViewById<ListView>(Resource.Id.ContactsListView);
                 contactsListView.Adapter = contactsAdapter;
                 contactsListView.ItemClick += ItemClick;
+                SaveQuoteRequest(quotesViewModel.Quotes, Request, quotesViewModel);
             }
             else
             {
@@ -101,7 +102,7 @@ namespace SendMe.Droid.Activities
                 Quotes = ada,
             };
 
-            //quotesViewModel.SaveQuoteRequest(quoteRequest);
+             quotesViewModel.SaveQuoteRequest(quoteRequest);
         }
         
     }

@@ -360,8 +360,6 @@ namespace SendMe.Droid.Activities
             if (!ValidateForm())
                 return;
 
-            getQuoteButton.Enabled = true;
-
             string pickupLocationPlaceId = PickUpLocations.FirstOrDefault(l => l.Description.Trim() == pickupLocation.Text.Trim()).PlaceId;
             string dropLocationPlaceId = DropLocations.FirstOrDefault(l => l.Description.Trim() == dropLocation.Text.Trim()).PlaceId;
 
@@ -381,8 +379,7 @@ namespace SendMe.Droid.Activities
             Intent i = new Intent(this, typeof(QuoteActivity));
             i.PutExtra("request", Newtonsoft.Json.JsonConvert.SerializeObject(request));
             StartActivity(i);
-
-            getQuoteButton.Enabled = false;
+            
         }
 
         private bool ValidateForm()

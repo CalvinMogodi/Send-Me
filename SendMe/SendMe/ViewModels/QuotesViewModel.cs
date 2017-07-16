@@ -40,5 +40,9 @@ namespace SendMe.ViewModels
             }
         }
 
+        public async void SaveQuoteRequest(QuoteRequest quoteRequest) {
+            DataStore.SaveQuoteRequest(quoteRequest);
+        }
+
     }
 }
