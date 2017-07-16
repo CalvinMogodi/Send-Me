@@ -34,7 +34,6 @@ namespace SendMe.Droid.Activities
 
             MessageDialog messageDialog = new MessageDialog();
             messageDialog.ShowLoading();
-            base.OnCreate(bundle);
             var request = Intent.GetStringExtra("request");
             Request item = JsonConvert.DeserializeObject<Request>(request);
 

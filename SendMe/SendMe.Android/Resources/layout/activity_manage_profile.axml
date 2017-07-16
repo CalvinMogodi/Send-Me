@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_scrollFlags="scroll|enterAlways|snap" />
+  </android.support.design.widget.AppBarLayout>
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+    <ImageView
+         android:src="@drawable/profile_generic"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:layout_gravity="center_horizontal"
+         android:id="@+id/manage_profile_profile_picture" />
+    <TextView
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Sign up as courier"
+               android:id="@+id/manage_profile_textView1" />
+    <EditText
+        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Display Name"
+        android:id="@+id/manage_profile_etdisplay_name" />
+    <EditText
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_profile_courier_mobile_number"
+        android:hint="Mobile Number" />
+    <EditText
+           android:hint="Choose Your Vehicles Body Type"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/manage_profile_vehicle_body_type"/>
+    <TextView
+        android:text="Your Charges"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_profile_tvCourierCharges" />
+    <EditText
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_profile_etPricePerKM"
+        android:hint="Price Per KM" />
+    <EditText
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_profile_etExtraCharges"
+        android:hint="Extra Charges" />
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       android:orientation="horizontal">
+      <Button
+          android:text="Cancel"
+          android:backgroundTint="@color/primary"
+          android:theme="@style/button_primary"
+          android:id="@+id/manage_profile_cancelbutton"
+          android:layout_width="140dp"
+          android:paddingLeft="20dp"
+          android:layout_height="wrap_content" />
+      <Button
+          android:text="Update"
+          android:backgroundTint="@color/primary"
+          android:theme="@style/button_primary"
+          android:id="@+id/manage_profile_loginbutton"
+          android:layout_width="140dp"
+          android:paddingRight="20dp"
+          android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:gravity="center"
+        android:id="@+id/manage_profile_tvmessage" />
+  </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

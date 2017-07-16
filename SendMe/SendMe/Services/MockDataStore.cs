@@ -117,9 +117,71 @@ namespace SendMe.Services
 
         public void SaveQuoteRequest(QuoteRequest quoteRequest)
         {
+
             firebase.Child("QuoteRequest").PostAsync(quoteRequest);
         }
-        public async Task<Respond> AddUserAsync(User user)
+
+        public async Task<User> GetUserById(string id)
+        {
+            User user = new User();
+            try
+            {
+                var users = await firebase.Child("User").OnceAsync<User>();
+                user = users.FirstOrDefault(u => u.Key.ToString() == id).Object;
+                user.Id = id;               
+            }
+            catch (Exception)
+            {                
+            }
+            return user;
+        }
+
+        public async Task<Respond> UpdateUserAsync(User user)
+        {
+            Respond respond = new Respond();
+            bool updated = false;
+            try
+            {
+                var users = await firebase.Child("User").OnceAsync<User>();
+                var thisUser = users.FirstOrDefault(u => u.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim());
+                    if (thisUser != null)
+                    {
+                        respond.ErrorOccurred = false;
+                        respond.IsSuccessful = true;
+                        await firebase.Child("User").Child(thisUser.Key).Child("displayName").PutAsync(user.DisplayName);
+                        await firebase.Child("User").Child(thisUser.Key).Child("profilePicture").PutAsync(user.ProfilePicture);
+                        await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("mobileNumber").PutAsync(user.Courier.MobileNumber);
+                        await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("pricePerKM").PutAsync(user.Courier.PricePerKM);
+                        await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("extraCharges").PutAsync(user.Courier.ExtraCharges);
+                        await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("vehicleBodyTypes").PutAsync(user.Courier.VehicleBodyTypes);
+                        updated = true;
+                    }
+                if (!updated)
+                {
+                    respond.ErrorOccurred = true;
+                    respond.IsSuccessful = true;
+                    respond.Error = new Error()
+                    {
+                        UserExist = true,
+                        Message = "User does not exist.",
+                    };
+                }
+                return respond;
+            }
+            catch (Exception ex)
+            {
+                respond.ErrorOccurred = true;
+                respond.IsSuccessful = true;
+                respond.Error = new Error()
+                {
+                    DatabaseError = true,
+                    Message = "Error Occurred: Please try again.",
+                };
+                return respond;
+            }
+}
+
+            public async Task<Respond> AddUserAsync(User user)
         {
             Respond respond = new Respond();
 
@@ -162,6 +224,7 @@ namespace SendMe.Services
         public async Task<ObservableRangeCollection<Quote>> GetQuotesAsync(Request request)
         {
             ObservableRangeCollection<Quote> quotes = new ObservableRangeCollection<Quote>();
+            List<Quote> quoteList = new List<Quote>();
             try
             {
                 var couriers = await firebase.Child("User").OnceAsync<User>();
@@ -192,12 +255,18 @@ namespace SendMe.Services
 
                             if (quote.CourierKmDistance <= 50)
                             {
-                                quotes.Add(quote);
+                                quoteList.Add(quote);
                             }
                                
                             }
                         }
                     }
+                if (quoteList.Count > 0)
+                {
+                    var newList = quoteList.OrderBy(q => q.Price).ToList();
+                    quotes.AddRange(newList);
+                }
+               
                 return await Task.FromResult(quotes);
             }
             catch (Exception ex)

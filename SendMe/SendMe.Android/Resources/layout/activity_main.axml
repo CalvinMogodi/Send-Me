@@ -78,5 +78,22 @@
                 android:paddingRight="20dp"
                 android:layout_height="140dp" />
         </LinearLayout>
+      <LinearLayout
+         android:orientation="horizontal"
+         android:gravity="center_horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+        <Button
+            android:text="Manage Profile"
+            android:visibility="gone"
+            android:backgroundTint="@color/primary"
+            android:theme="@style/button_primary"
+            android:id="@+id/main_manageProfile"
+            android:gravity="center"
+            android:layout_width="200dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_height="140dp" />
+      </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -29,7 +29,7 @@ namespace SendMe.Droid
         TabsAdapter adapter;
         AlertDialog dialog;
         ProgressBar progressBar;
-        Button rcButton, acButton, loginButton, loginCancelButton;
+        Button rcButton, acButton, loginButton, loginCancelButton, manageProfileButton;
         EditText username, password;
         bool IsAuthenticated = false;
         TextView message, forgotpassword;
@@ -42,11 +42,20 @@ namespace SendMe.Droid
             base.OnCreate(savedInstanceState);
             rcButton = FindViewById<Button>(Resource.Id.main_requestCourier);
             acButton = FindViewById<Button>(Resource.Id.main_activateCourier);
+            manageProfileButton = FindViewById<Button>(Resource.Id.main_manageProfile);
             courierIsActive = FindViewById<Switch>(Resource.Id.main_switchActivateCourier);
+
             courierIsActive.Click += SwitchActivateCourier_Click;
 
             rcButton.Click += RCButton_Click;
             acButton.Click += ACButton_Click;
+            manageProfileButton.Click += ManageProfileButton_Click;
+
+
+            if (courierIsActive.Checked)
+                manageProfileButton.Visibility = ViewStates.Visible;
+            else
+                manageProfileButton.Visibility = ViewStates.Gone;
 
             Toolbar.MenuItemClick += (sender, e) =>
             {
@@ -60,6 +69,9 @@ namespace SendMe.Droid
                     case "Contact Us":
                         intent = new Intent(this, typeof(ContactActivity));
                         break;
+                    case "Manage My Profile":
+                        intent = new Intent(this, typeof(ManageProfileActivity));
+                        break;
                 }
 
                 StartActivity(intent);
@@ -72,6 +84,24 @@ namespace SendMe.Droid
             intent = new Intent(this, typeof(RequestCourierActivity));
             StartActivity(intent);
         }
+
+        private void ManageProfileButton_Click(object sender, EventArgs e)
+        {
+            if (LoginViewModel != null)
+            {
+                if (LoginViewModel.User != null)
+                {
+                    var intent = new Intent();
+                    intent = new Intent(this, typeof(ManageProfileActivity));
+                    intent.PutExtra("userId", LoginViewModel.User.Id);
+                    StartActivity(intent);
+                }
+                else {
+                    MessageDialog messageDialog = new MessageDialog();
+                    messageDialog.SendToast("Please log in to manage your profile.");
+                }
+            }
+        }        
 
         private void ACButton_Click(object sender, EventArgs e)
         {
@@ -113,12 +143,13 @@ namespace SendMe.Droid
             StartActivity(intent);
         }
 
-        public void SwitchActivateCourier_Click(object sender, EventArgs e) {
+        public void SwitchActivateCourier_Click(object sender, EventArgs e) {           
             if (courierIsActive.Checked)
             {
                 ACButton_Click(sender, e);
             }
             else {
+                manageProfileButton.Visibility = ViewStates.Gone;
                 courierIsActive.Checked = false;
                 if (LoginViewModel != null)
                     {
@@ -165,6 +196,7 @@ namespace SendMe.Droid
             {
                 IsAuthenticated = LoginViewModel.IsAuthenticated;
                 courierIsActive.Checked = IsAuthenticated;
+                manageProfileButton.Visibility = ViewStates.Visible;
                 dialog.Cancel();
             }
             else
@@ -172,6 +204,7 @@ namespace SendMe.Droid
                 message.Text = "Invaild username or password";
                 loginButton.Enabled = true;
                 loginCancelButton.Enabled = true;
+                manageProfileButton.Visibility = ViewStates.Gone;
                 progressBar.Visibility = ViewStates.Gone;
                 forgotpassword.Enabled = false;
                 dialog.Show();

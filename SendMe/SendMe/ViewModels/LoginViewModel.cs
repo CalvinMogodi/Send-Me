@@ -39,7 +39,16 @@ namespace SendMe.ViewModels
             Respond = await DataStore.ChangePasswordAsync(_user);
         }
 
-        
+        public async Task UpdateUserAsync(User user)
+        {
+            var _user = user as User;
+            Respond = await DataStore.UpdateUserAsync(_user);
+        }
+
+        public async Task GetUserById(string id)
+        {
+            User = await DataStore.GetUserById(id);
+        }
 
 
     }

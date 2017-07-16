@@ -89,6 +89,7 @@
     <Compile Include="Activities\BrowseItemDetailActivity.cs" />
     <Compile Include="Activities\ContactActivity.cs" />
     <Compile Include="Activities\ForgotPasswordActivity.cs" />
+    <Compile Include="Activities\ManageProfileActivity.cs" />
     <Compile Include="Activities\QuoteActivity.cs" />
     <Compile Include="Activities\RequestCourierActivity.cs" />
     <Compile Include="Activities\SignUpActivity.cs" />
@@ -146,6 +147,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_quote.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_manage_profile.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

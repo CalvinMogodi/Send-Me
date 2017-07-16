@@ -14,5 +14,7 @@ namespace SendMe.Services
         Task Logout(User user);
         void SaveQuoteRequest(QuoteRequest quoteRequest);
         Task<Respond> ChangePasswordAsync(User user);
+        Task<Respond> UpdateUserAsync(User user);
+        Task<User> GetUserById(string id);
     }
 }
