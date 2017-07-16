@@ -138,6 +138,7 @@ namespace SendMe.Services
                                 {
                                     CourierKmDistance = courierKmDistance,
                                     CourierName = user.Object.DisplayName,
+                                    CourierMobileNumber = user.Object.Courier.MobileNumber,
                                     Price = price,
                                     CourierProfilePicture = user.Object.ProfilePicture,
                                 };

@@ -42,6 +42,7 @@
     <Compile Include="Helpers\MessagingCenterAlert.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />
     <Compile Include="Helpers\ObservableRangeCollection.cs" />
+    <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Helpers\ServiceLocator.cs" />
     <Compile Include="Helpers\Validations.cs" />
     <Compile Include="Interfaces\IBaseDataObject.cs" />

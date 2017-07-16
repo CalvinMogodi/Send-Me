@@ -35,9 +35,7 @@ namespace SendMe.Droid.Activities
 
             var request = Intent.GetStringExtra("request");
             SendMe.Models.Request item = Newtonsoft.Json.JsonConvert.DeserializeObject<SendMe.Models.Request>(request);
-
-            ViewModel = new QuotesViewModel(item);
-            loadItems = ViewModel.ExecuteLoadQuotesCommand(item);
+            
 
             Initialize();
         }

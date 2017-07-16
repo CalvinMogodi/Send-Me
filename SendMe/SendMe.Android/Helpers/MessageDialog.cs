@@ -4,6 +4,7 @@ using Android.Widget;
 using SendMe.Interfaces;
 using Plugin.CurrentActivity;
 using Android.Telephony;
+using SendMe.Helpers;
 
 namespace SendMe.Droid
 {
@@ -41,8 +42,13 @@ namespace SendMe.Droid
 
         public void SendSMS(string mobileNumber, string message)
         {
-            SmsManager.Default.SendTextMessage(mobileNumber, null, message, null, null);
-            SendToast("Message is sent sucessfully.");
+            Validations Validations = new Validations();
+            if (Validations.IsValidPhone(mobileNumber))
+            {
+                SmsManager.Default.SendTextMessage(mobileNumber, null, message, null, null);
+                SendToast("Message is sent sucessfully.");
+            }
+            
         }
         public void SendMessage(string message, string title = null)
         {

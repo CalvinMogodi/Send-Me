@@ -14,15 +14,12 @@ namespace SendMe.ViewModels
     {
         public ObservableRangeCollection<Quote> Quotes { get; set; }
 
-        public QuotesViewModel(Request request)
+        public QuotesViewModel()
         {
             Title = "Quotes";
-            Quotes = new ObservableRangeCollection<Quote>();
-            var task = ExecuteLoadQuotesCommand(request);
-            //task.Wait();
         }
 
-        public async Task ExecuteLoadQuotesCommand(Request request)
+        public async Task GetQuotes(Request request)
         {
             if (IsBusy)
                 return;
@@ -31,8 +28,7 @@ namespace SendMe.ViewModels
 
             try
             {
-                Quotes.Clear();
-                var quotes = MockedQuotesAsync(request);
+                Quotes = await DataStore.GetQuotesAsync(request);
             }
             catch (Exception ex)
             {
@@ -42,15 +38,6 @@ namespace SendMe.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-
-        private async Task<ObservableRangeCollection<Quote>> MockedQuotesAsync(Request request)
-        {
-
-           var quotes = await DataStore.GetQuotesAsync(request);            
-            Quotes = quotes;
-            return quotes;
         }
 
     }

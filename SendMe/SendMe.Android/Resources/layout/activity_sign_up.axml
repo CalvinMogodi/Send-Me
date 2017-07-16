@@ -22,10 +22,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical">
+    <TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:id="@+id/title"
+  android:text="Example Title"
+  android:visibility="gone" />
       <ImageView
            android:src="@drawable/profile_generic"
-           android:layout_width="96dp"
-           android:layout_height="96dp"
+           android:layout_width="60dp"
+           android:layout_height="60dp"
            android:layout_gravity="center_horizontal"
            android:id="@+id/signup_profile_picture" />
     <TextView

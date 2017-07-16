@@ -41,7 +41,9 @@ namespace SendMe.Droid.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            this.Title = "Sing Up";
+            SetTitle(Resource.Id.title);
+            this.SetTitle(Resource.Id.title);
             Initialize();
         }
 
