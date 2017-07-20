@@ -46,24 +46,81 @@ namespace SendMe.Services
             }
         }
 
-        public async Task<Respond> ChangePasswordAsync(User user)
+        public async Task<Respond> SetOPTForUsersync(string username, int oneTimePin) {
+            Respond respond = new Respond();
+            bool updated = false;
+            try
+            {
+                var users = await firebase.Child("User").OnceAsync<User>();
+                var thisUser = users.FirstOrDefault(u => u.Object.Username.ToLower().Trim() == username.ToLower().Trim());
+                if (thisUser != null)
+                {
+                    respond.ErrorOccurred = false;
+                    respond.IsSuccessful = true;
+                    await firebase.Child("User").Child(thisUser.Key).Child("oneTimePin").PutAsync(oneTimePin);
+                    await firebase.Child("User").Child(thisUser.Key).Child("oneTimePinDateTime").PutAsync(DateTime.Now);
+                    updated = true;
+                    respond.User = thisUser.Object;
+                }
+                if (!updated)
+                {
+                    respond.ErrorOccurred = true;
+                    respond.IsSuccessful = true;
+                    respond.Error = new Error()
+                    {
+                        UserExist = true,
+                        Message = "User does not exist.",
+                    };
+                }
+                return respond;
+            }
+            catch (Exception ex)
+            {
+                respond.ErrorOccurred = true;
+                respond.IsSuccessful = true;
+                respond.Error = new Error()
+                {
+                    DatabaseError = true,
+                    Message = "Error Occurred: Please try again.",
+                };
+                return respond;
+            }
+        }
+
+        public async Task<Respond> ChangePasswordAsync(User user, int oneTimePin)
         {
             Respond respond = new Respond();
             bool passwordChaned = false;
+            bool passed5minutes = false;
+            bool incorrectOTP = false;
             try
             {
                 var users = await firebase.Child("User").OnceAsync<User>();
                 foreach (var item in users)
-                {
+                {                   
                     if (item.Object.Username.ToLower().Trim() == user.Username.ToLower().Trim())
                     {
-                        item.Object.Id = item.Key;
-                        respond.ErrorOccurred = false;
-                        respond.IsSuccessful = true;
-                        await firebase.Child("User").Child(item.Object.Id).Child("password").PutAsync(user.Password);
-                        passwordChaned = true;
+                        if (item.Object.OneTimePin != oneTimePin)
+                        {
+                            incorrectOTP = true;
+                        }
+                        else {
+                            if (DateTime.Now.Subtract(item.Object.OneTimePinDateTime) > TimeSpan.FromMinutes(20))
+                            {
+                                passed5minutes = true;
+                            }
+                            else {
+                                item.Object.Id = item.Key;
+                                respond.ErrorOccurred = false;
+                                respond.IsSuccessful = true;
+                                await firebase.Child("User").Child(item.Object.Id).Child("password").PutAsync(user.Password);
+                                passwordChaned = true;
+                            }
+                            
+                        }                        
+                        
                         break;
-                    }
+                    }                   
                 }
 
                 if (!passwordChaned)
@@ -75,6 +132,10 @@ namespace SendMe.Services
                         UserExist = true,
                         Message = "Username does not exist.",
                     };
+                    if (passed5minutes)
+                        respond.Error.Message = "One time pin as expired.";
+                    if (incorrectOTP)
+                        respond.Error.Message = "Incorrect one time pin.";
                 }
 
                 return respond;

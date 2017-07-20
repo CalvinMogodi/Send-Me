@@ -56,10 +56,12 @@ namespace SendMe.Droid.Activities
             messageDialog.ShowLoading();
             message.Text = "";
 
+            EncryptionHelper encryptionHelper = new EncryptionHelper();
+
             var _user = new User(){
                 Username = username.Text.Trim(),
                 DisplayName = displayName.Text.Trim(),
-                Password = password.Text.Trim(),
+                Password = encryptionHelper.Encrypt(password.Text.Trim(), "Passw0rd@SendMe"),
                 UserTypeId = 3,
                 ProfilePicture = Logo,
                 Courier = new Courier()

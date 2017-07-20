@@ -33,10 +33,15 @@ namespace SendMe.ViewModels
             DataStore.Logout(_user);            
         }
 
-        public async Task ChangePasswordAsync(User user)
+        public async Task ChangePasswordAsync(User user, int oneTimePin)
         {
             var _user = user as User;
-            Respond = await DataStore.ChangePasswordAsync(_user);
+            Respond = await DataStore.ChangePasswordAsync(_user, oneTimePin);
+        }
+        
+        public async Task SetOPTForUsersync(string username, int oneTimePin)
+        {
+            Respond = await DataStore.SetOPTForUsersync(username, oneTimePin);
         }
 
         public async Task UpdateUserAsync(User user)

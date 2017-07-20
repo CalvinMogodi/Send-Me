@@ -28,6 +28,12 @@ namespace SendMe.Models
         [JsonProperty("userTypeId")]
         public int UserTypeId { get; set; }
 
+        [JsonProperty("oneTimePin")]
+        public int OneTimePin { get; set; }
+
+        [JsonProperty("oneTimePinDateTime")]
+        public DateTime OneTimePinDateTime { get; set; }
+
         [JsonProperty("isActive")]
         public bool IsActive { get; set; }
 

@@ -44,6 +44,13 @@ namespace SendMe.Helpers
                 return true;
             return false;
         }
+        
+        public bool IsValidOTP(string otp)
+        {
+            if (!string.IsNullOrEmpty(otp) && otp.Length == 5)
+                return true;
+            return false;
+        }
 
         public bool IsValidDatetime(string date)
         {

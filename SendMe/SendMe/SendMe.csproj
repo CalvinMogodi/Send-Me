@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Enums\UserType.cs" />
-    <Compile Include="Helpers\Cryptography.cs" />
     <Compile Include="Helpers\MessagingCenter.cs" />
     <Compile Include="Helpers\MessagingCenterAlert.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />

@@ -53,6 +53,8 @@ namespace SendMe.Droid.Activities
             else
             {
                 messageDialog.SendToast("There are no couriers available within 50KM from your pick up location.");
+                Intent intent = new Intent(this, typeof(RequestCourierActivity));
+                StartActivity(intent);
             }
             messageDialog.HideLoading();
         }

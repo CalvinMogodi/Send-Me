@@ -13,6 +13,8 @@ namespace SendMe.Models
         public Boolean ErrorOccurred { get; set; }
 
         public Error Error { get; set; }
+
+        public User User { get; set; }
     }
     public class Error {
 
@@ -20,6 +22,5 @@ namespace SendMe.Models
         public Boolean UserExist { get; set; }
         public Boolean UserIsAlreadyLoggedIn { get; set; }
         public string Message { get; set; }
-
-    }
+    }    
 }

@@ -2,6 +2,7 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">Send Me</string>
+  <string name="encryption_password">Passw0rd@SendMe</string>
   <string name="sing_up_header">Sing Up</string>
   <string name="request_courier_header">Request Courier</string>
   <string name="contact_us_header">Sing Up</string>

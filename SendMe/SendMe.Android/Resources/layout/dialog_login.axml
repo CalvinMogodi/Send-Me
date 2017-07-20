@@ -48,7 +48,7 @@
             android:theme="@style/button_primary"
             android:id="@+id/dialog_login_loginbutton"
             android:layout_width="140dp"
-                android:paddingRight="20dp"
+            android:paddingRight="20dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView

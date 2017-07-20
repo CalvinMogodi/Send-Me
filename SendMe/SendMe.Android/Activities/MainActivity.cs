@@ -9,6 +9,7 @@ using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
 using SendMe.Droid.Activities;
+using SendMe.Droid.Helpers;
 using SendMe.Helpers;
 using SendMe.Models;
 using SendMe.ViewModels;
@@ -170,12 +171,12 @@ namespace SendMe.Droid
             loginButton.Enabled = false;
             loginCancelButton.Enabled = false;
             forgotpassword.Enabled = false;
-
+            EncryptionHelper encryptionHelper = new EncryptionHelper();
             message.Text = "";
             var _user = new User()
             {
-                Username = username.Text,
-                Password = password.Text,
+                Username = username.Text.Trim(),
+                Password = encryptionHelper.Encrypt(password.Text, "Passw0rd@SendMe"),
             };
 
             var permissionCheck = CheckSelfPermission("ACCESS_FINE_LOCATION").ToString();
@@ -216,6 +217,7 @@ namespace SendMe.Droid
         {
             dialog.Cancel();
             courierIsActive.Checked = IsAuthenticated;
+
         }
 
         private bool ValidateForm()
