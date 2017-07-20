@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.Locations;
+using Android.Net;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.App;
@@ -25,7 +26,7 @@ namespace SendMe.Droid
     {
 
         protected override int LayoutResource => Resource.Layout.activity_main;
-
+        AlertDialog settingsAlert;
         //ViewPager pager;
         TabsAdapter adapter;
         AlertDialog dialog;
@@ -51,7 +52,18 @@ namespace SendMe.Droid
             rcButton.Click += RCButton_Click;
             acButton.Click += ACButton_Click;
             manageProfileButton.Click += ManageProfileButton_Click;
-
+            
+            var networkInfo =  (ConnectivityManager)GetSystemService(ConnectivityService);
+            
+            if (networkInfo.ActiveNetworkInfo == null)
+            {
+                rcButton.Visibility = ViewStates.Gone;
+                acButton.Visibility = ViewStates.Gone;
+                courierIsActive.Visibility = ViewStates.Gone;
+                Toolbar.Visibility = ViewStates.Gone;
+                MessageDialog messageDialog = new MessageDialog();
+                messageDialog.SendToast("Failed to connect to network.");
+            }
 
             if (courierIsActive.Checked)
                 manageProfileButton.Visibility = ViewStates.Visible;
@@ -161,12 +173,32 @@ namespace SendMe.Droid
                     }
             }
         }
+
+        public void ShowSettingsAlert()
+        {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(Application.Context);
+            Intent intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+            StartActivity(intent);
+            // Setting Dialog Title
+            //alertDialog.SetTitle("GPS is settings").SetMessage("GPS is not enabled. Do you want to go to settings menu?").SetPositiveButton("OK", delegate {
+            //    Intent intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+            //    Application.Context.StartActivity(intent);
+            //}).SetNegativeButton("Cancel", delegate {
+                
+            //});
+            //AlertDialog settingsAlertd = alertDialog.Create();
+            //settingsAlertd.Show();
+            //settingsAlertd.SetCanceledOnTouchOutside(false);
+
+        }
+
         private async void LoginButton_Click(object sender, EventArgs e)
         {
             courierIsActive.Checked = IsAuthenticated;
             if (!ValidateForm())
                 return;
 
+            MessageDialog messageDialog = new MessageDialog();
             progressBar.Visibility = ViewStates.Visible;
             loginButton.Enabled = false;
             loginCancelButton.Enabled = false;
@@ -179,16 +211,51 @@ namespace SendMe.Droid
                 Password = encryptionHelper.Encrypt(password.Text, "Passw0rd@SendMe"),
             };
 
-            var permissionCheck = CheckSelfPermission("ACCESS_FINE_LOCATION").ToString();
-            if (permissionCheck.Equals("Denied"))
-            {
-                LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
-                var currentLocation = locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
-                _user.CurrentLocation = new SendMe.Models.Location()
+            LocationManager locationManager = (LocationManager)GetSystemService(LocationService);
+
+            bool isGPSEnabled = locationManager.IsProviderEnabled(LocationManager.GpsProvider);
+            bool isNetworkEnabled = locationManager.IsProviderEnabled(LocationManager.NetworkProvider);
+            bool isPassiveProviderEnabled = locationManager.IsProviderEnabled(LocationManager.PassiveProvider);
+
+            if (!isGPSEnabled && !isNetworkEnabled && !isPassiveProviderEnabled)
+            {        
+                dialog.Cancel();
+                messageDialog.SendToast("GPS is not enabled");
+                ShowSettingsAlert();                
+            }
+            
+            else {
+                Android.Locations.Location location = null; // location
+
+                if (isGPSEnabled)
                 {
-                    Latitude = currentLocation.Latitude,
-                    Longitude = currentLocation.Longitude,
-                };
+                    if (location == null)
+                        location = locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
+                }                    
+                if (isNetworkEnabled)
+                {
+                    if (location == null)
+                        location = locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
+                }
+                if (isPassiveProviderEnabled)
+                {
+                    if (location == null)
+                        location = locationManager.GetLastKnownLocation(LocationManager.PassiveProvider);
+                }
+                if (location != null)
+                {
+                    _user.CurrentLocation = new SendMe.Models.Location()
+                    {
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
+                    };
+                }
+                else {
+                   
+                    messageDialog.SendToast("Unable to get your location please make sure your GPS is enabled");
+                    return;
+                }
+                
             }
 
             await LoginViewModel.LoginUserAsync(_user);

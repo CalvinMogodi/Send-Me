@@ -98,6 +98,7 @@
     <Compile Include="Fragments\RequestCourierFragment.cs" />
     <Compile Include="Helpers\Class1.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
+    <Compile Include="Helpers\GPSTracker.cs" />
     <Compile Include="Helpers\ImageManager.cs" />
     <Compile Include="Helpers\MessageDialog.cs" />
     <Compile Include="Activities\MainActivity.cs" />

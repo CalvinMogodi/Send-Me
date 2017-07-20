@@ -54,6 +54,14 @@
             style="?android:textAppearanceSmall"
             android:id="@+id/textView2"
             android:gravity="center" />
+      <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            style="?android:textAppearanceSmall"
+            android:id="@+id/textView66"
+            android:gravity="center" />
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center_horizontal"

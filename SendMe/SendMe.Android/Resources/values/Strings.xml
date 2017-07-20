@@ -23,7 +23,7 @@
   <string name="hint_name">Name</string>
   <string name="info">Information</string>
   <string name="hint_description">Description</string>
-  <string name="about_sendMe">This app is written in C# and native APIs using the Xamarin Platform. It shares code with its iOS, Android, &amp; Windows versions</string>
+  <string name="about_sendMe">This app enable everyone to make quick money by signing up and be active then start making money. You can also request someone within 50KM from your pickup location to collect and drop your items anywhere anytime.</string>
   <string name="app_description">This app is written in C# and native APIs using the Xamarin Platform. It shares code with its iOS, Android, &amp; Windows versions.</string>
   <string name="sign_in_text">Sign in with your account to save and sync items</string>
   <string name="second_contact">079 124 0425</string>
