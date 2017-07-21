@@ -21,18 +21,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+         android:paddingTop="90dp"
+     android:paddingLeft="10dp"
+     android:paddingRight="10dp"
     android:gravity="center_vertical">
     <ImageView
          android:src="@drawable/profile_generic"
          android:layout_width="60dp"
          android:layout_height="60dp"
          android:layout_gravity="center_horizontal"
-         android:id="@+id/manage_profile_profile_picture" />
+         android:id="@+id/manage_profile" />
     <TextView
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="Sign up as courier"
+               android:text="Manage Your Profile"
                android:id="@+id/manage_profile_textView1" />
     <EditText
         android:inputType="textPersonName"

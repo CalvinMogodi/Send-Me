@@ -132,7 +132,7 @@ namespace SendMe.Droid.Activities
             vehiclebodytype = FindViewById<EditText>(Resource.Id.manage_profile_vehicle_body_type);
             courierMobileNumber = FindViewById<EditText>(Resource.Id.manage_profile_courier_mobile_number);
             displayName = FindViewById<EditText>(Resource.Id.manage_profile_etdisplay_name);
-            profilePicture = FindViewById<ImageView>(Resource.Id.manage_profile_profile_picture);
+            profilePicture = FindViewById<ImageView>(Resource.Id.manage_profile);
             pricePerKM = FindViewById<EditText>(Resource.Id.manage_profile_etPricePerKM);
             extraCharges = FindViewById<EditText>(Resource.Id.manage_profile_etExtraCharges);
             message = FindViewById<TextView>(Resource.Id.manage_profile_tvmessage);
@@ -171,7 +171,14 @@ namespace SendMe.Droid.Activities
             displayName.Text = ViewModel.User.DisplayName;
             pricePerKM.Text = ViewModel.User.Courier.PricePerKM.ToString();
             extraCharges.Text = ViewModel.User.Courier.ExtraCharges.ToString();
-            profilePicture.SetImageBitmap(imageManager.ConvertStringToBitMap(ViewModel.User.ProfilePicture));
+            if (ViewModel.User.ProfilePicture == null)
+            {
+                profilePicture.SetImageResource(Resource.Drawable.profile_generic);
+            }
+            else {
+                profilePicture.SetImageBitmap(imageManager.ConvertStringToBitMap(ViewModel.User.ProfilePicture));
+            }
+        
             // set OnCheckedChanged
             vehiclebodytype.Touch += OnVehiclebodytype_TextChanged;
             var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.choosevehiclebodytypes, Android.Resource.Layout.SimpleSpinnerDropDownItem);

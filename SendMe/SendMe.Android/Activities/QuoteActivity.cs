@@ -132,18 +132,10 @@ namespace SendMe.Droid.Activities
         List<Contact> _contactList;
         List<Quote> _quoteList;
         Activity _activity;
-
-        //public QuotesAdapter(Activity activity, ObservableRangeCollection<Quote> quotes)
-        //{
-        //    _activity = activity;
-        //    FillContacts();
-        //    //_quoteList = quotes.ToList();
-        //}
         public ContactsAdapter(Activity activity, ObservableRangeCollection<Quote> quotes)
         {
             _activity = activity;
             _quoteList = quotes.ToList();
-            FillContacts();
         }
 
         public override int Count
@@ -171,23 +163,6 @@ namespace SendMe.Droid.Activities
             var contactImage = view.FindViewById<ImageView>(Resource.Id.imageView1);
             var courierDescription = view.FindViewById<TextView>(Resource.Id.courierDescription);
 
-            //if (_contactList[position].PhotoId == null)
-            //{
-             //   contactImage = view.FindViewById<ImageView>(Resource.Id.ContactImage);
-            //    contactImage.SetImageResource(Resource.Drawable.profile_generic);
-            //}
-            //else
-            //{
-            //    var contactUri = ContentUris.WithAppendedId(
-            //        ContactsContract.Contacts.ContentUri, _contactList[position].Id);
-            //    var contactPhotoUri = Android.Net.Uri.WithAppendedPath(contactUri,
-            //        Contacts.Photos.ContentDirectory);
-            //    contactImage.SetImageURI(contactPhotoUri);
-            //}
-
-            //var view = convertView ?? _activity.LayoutInflater.Inflate(Resource.Layout.quote_listItem, parent, false);
-            //var quote = _quoteList[position];
-
             var quotePriceAndCourierKM = view.FindViewById<TextView>(Resource.Id.quotePriceAndCourierKM);
            
             var courierImage = view.FindViewById<ImageView>(Resource.Id.courierImage);
@@ -204,42 +179,18 @@ namespace SendMe.Droid.Activities
             ////var myHolder = holder as MyViewHolder;
             courierDescription.Text = _quoteList[position].CourierName;
             contactName.Text = string.Format("{0} {1} - {2} KM", RegionInfo.CurrencySymbol, _quoteList[position].Price.ToString("F"), _quoteList[position].CourierKmDistance.ToString("F"));
-            contactImage.SetImageBitmap(imageManager.ConvertStringToBitMap(_quoteList[position].CourierProfilePicture));
+
+            if (!string.IsNullOrEmpty(_quoteList[position].CourierProfilePicture))
+            {
+                contactImage.SetImageBitmap(imageManager.ConvertStringToBitMap(_quoteList[position].CourierProfilePicture));
+            }
+            else {
+                contactImage.SetImageResource(Resource.Drawable.profile_generic);
+            }
+       
 
             return view;
         }
-        
-        void FillContacts()
-        {
-            var uri = ContactsContract.Contacts.ContentUri;
-
-            string[] projection = {
-                ContactsContract.Contacts.InterfaceConsts.Id,
-                ContactsContract.Contacts.InterfaceConsts.DisplayName,
-                ContactsContract.Contacts.InterfaceConsts.PhotoId
-            };
-
-            var cursor = _activity.ManagedQuery(uri, projection, null,null, null);
-
-            _contactList = new List<Contact>();
-
-            if (cursor.MoveToFirst())
-            {
-                do
-                {
-                    _contactList.Add(new Contact
-                    {
-                        Id = cursor.GetLong(
-                    cursor.GetColumnIndex(projection[0])),
-                        DisplayName = cursor.GetString(
-                    cursor.GetColumnIndex(projection[1])),
-                        PhotoId = cursor.GetString(
-                    cursor.GetColumnIndex(projection[2]))
-                    });
-                } while (cursor.MoveToNext());
-            }
-        }
-
         class Contact
         {
             public long Id { get; set; }

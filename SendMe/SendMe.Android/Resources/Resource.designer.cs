@@ -2276,6 +2276,9 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060081
 			public const int main_switchActivateCourier = 2131099777;
 			
+			// aapt resource value: 0x7f060087
+			public const int manage_profile = 2131099783;
+			
 			// aapt resource value: 0x7f06008f
 			public const int manage_profile_cancelbutton = 2131099791;
 			
@@ -2293,9 +2296,6 @@ namespace SendMe.Droid
 			
 			// aapt resource value: 0x7f060090
 			public const int manage_profile_loginbutton = 2131099792;
-			
-			// aapt resource value: 0x7f060087
-			public const int manage_profile_profile_picture = 2131099783;
 			
 			// aapt resource value: 0x7f060088
 			public const int manage_profile_textView1 = 2131099784;

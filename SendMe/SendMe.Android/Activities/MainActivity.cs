@@ -9,12 +9,14 @@ using Android.Support.V4.App;
 using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
+using Java.Net;
 using SendMe.Droid.Activities;
 using SendMe.Droid.Helpers;
 using SendMe.Helpers;
 using SendMe.Models;
 using SendMe.ViewModels;
 using System;
+using System.Net;
 
 namespace SendMe.Droid
 {
@@ -37,7 +39,7 @@ namespace SendMe.Droid
         TextView message, forgotpassword;
         Switch courierIsActive;
         public User User { get; set; }
-        public LoginViewModel LoginViewModel { get; set; }
+        LoginViewModel LoginViewModel = new LoginViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -54,7 +56,7 @@ namespace SendMe.Droid
             manageProfileButton.Click += ManageProfileButton_Click;
             
             var networkInfo =  (ConnectivityManager)GetSystemService(ConnectivityService);
-            
+
             if (networkInfo.ActiveNetworkInfo == null)
             {
                 rcButton.Visibility = ViewStates.Gone;
@@ -64,6 +66,27 @@ namespace SendMe.Droid
                 MessageDialog messageDialog = new MessageDialog();
                 messageDialog.SendToast("Failed to connect to network.");
             }
+            //else {
+            //    bool canAccessInternet = false;
+            //    string google = "www.google.co.za";
+            //    URL url = new URL(google.ToString());
+            //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.ToString());
+            //    request.Timeout = 15000;
+            //    request.Method = "HEAD";
+
+            //    try
+            //    {
+            //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            //        {
+            //            //response.StatusCode = HttpStatusCode.OK;
+            //            canAccessInternet = true;
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //        canAccessInternet = false;
+            //    }
+            //}
 
             if (courierIsActive.Checked)
                 manageProfileButton.Visibility = ViewStates.Visible;
@@ -145,8 +168,6 @@ namespace SendMe.Droid
             forgotpassword.Click += ForgotPassword_Click;
             progressBar.Indeterminate = true;
             progressBar.Visibility = ViewStates.Gone;
-
-            LoginViewModel = new LoginViewModel();
         }
 
         public void ForgotPassword_Click(object sender, EventArgs e)

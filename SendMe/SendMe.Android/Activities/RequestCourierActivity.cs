@@ -246,12 +246,12 @@ namespace SendMe.Droid.Activities
                 JToken result = jObject["result"];
                 JToken geometryObject = result["geometry"];
                 JToken locationObject = geometryObject["location"];
-                var longitude = (string)locationObject["lng"];
-                var latitude = (string)locationObject["lat"];
+                double longitude = (double)locationObject["lng"];
+                double latitude = (double)locationObject["lat"];
                 location = new Location()
                     {
-                        Longitude = Convert.ToDouble(longitude),
-                        Latitude = Convert.ToDouble(latitude),
+                        Longitude = longitude,
+                        Latitude = latitude,
                         Description = description,
                         PlaceId = placeId
                 };
