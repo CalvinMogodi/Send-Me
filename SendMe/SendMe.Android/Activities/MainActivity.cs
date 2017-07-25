@@ -54,7 +54,7 @@ namespace SendMe.Droid
             rcButton.Click += RCButton_Click;
             acButton.Click += ACButton_Click;
             manageProfileButton.Click += ManageProfileButton_Click;
-            
+            SupportActionBar.SetDisplayHomeAsUpEnabled(false);
             var networkInfo =  (ConnectivityManager)GetSystemService(ConnectivityService);
 
             if (networkInfo.ActiveNetworkInfo == null)

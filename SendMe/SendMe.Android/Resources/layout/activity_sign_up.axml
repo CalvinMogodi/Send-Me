@@ -25,6 +25,8 @@
      android:paddingLeft="10dp"
      android:paddingRight="10dp"
         android:gravity="center_vertical">
+      <ScrollView>
+        <StackLayout>
         <ImageView
             android:src="@drawable/profile_generic"
             android:layout_width="60dp"
@@ -105,5 +107,7 @@
             android:textColor="#FF0000"
             android:gravity="center"
             android:id="@+id/signup_tvmessage" />
+        </StackLayout>
+      </ScrollView>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

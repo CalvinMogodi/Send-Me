@@ -22,11 +22,10 @@ using Newtonsoft.Json.Linq;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "@string/request_courier_header",
-        LaunchMode = LaunchMode.SingleInstance,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
-        ScreenOrientation = ScreenOrientation.Portrait)]
-    public class RequestCourierActivity : Activity
+    [Activity(Label = "@string/request_courier_header",  LaunchMode = LaunchMode.SingleInstance,ConfigurationChanges = ConfigChanges.ScreenSize | 
+     ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait ,ParentActivity = typeof(MainActivity))]
+    [MetaData("android.support.PARENT_ACTIVITY", Value = ".MainActivity")]
+    public class RequestCourierActivity : BaseActivity
     {
         Button getQuoteButton;
         AppBarLayout appBar;
@@ -36,6 +35,7 @@ namespace SendMe.Droid.Activities
         AutoCompleteTextView pickupLocation, dropLocation, autocompleteTextView;
         List<Location> PickUpLocations = new List<Location>();
         List<Location> DropLocations = new List<Location>();
+        Location fromLocation, tolocation;
 
         private String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
         private String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -56,12 +56,14 @@ namespace SendMe.Droid.Activities
 
         RequestCourierViewModel requestCourierViewModel;
 
+        protected override int LayoutResource => Resource.Layout.activity_request_courier;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            Toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            
+            //Toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            SupportActionBar.Title = "Request Couier";
             Initialize();
             
         }
@@ -70,7 +72,7 @@ namespace SendMe.Droid.Activities
         public void Initialize() {
 
             // Create your application here
-            SetContentView(Resource.Layout.activity_request_courier);
+            //SetContentView(Resource.Layout.activity_request_courier);
             getQuoteButton = FindViewById<Button>(Resource.Id.requestCourier_getQuoteButton);
             email = FindViewById<EditText>(Resource.Id.requestCourier_etemail);
             phone = FindViewById<EditText>(Resource.Id.requestCourier_etphone);
@@ -191,7 +193,7 @@ namespace SendMe.Droid.Activities
 
         public Location GetLocationDetails(string placeId, string description)
         {
-            Location location = new Location();
+            Location location = null;
             HttpURLConnection conn = null;
             StringBuilder jsonResults = new StringBuilder();
             try
@@ -223,11 +225,11 @@ namespace SendMe.Droid.Activities
             }
             catch (MalformedURLException e)
             {
-               
+                return location;
             }
             catch (IOException e)
             {
-                
+                return location;
             }
             finally
             {
@@ -255,13 +257,15 @@ namespace SendMe.Droid.Activities
                         Description = description,
                         PlaceId = placeId
                 };
-               
+
+                return location;
             }
             catch (JSONException e)
             {
+                return location;
             }
 
-            return location;
+           
         }
 
         public void DropLocationAutocomplete(object sender, EventArgs e)
@@ -360,12 +364,6 @@ namespace SendMe.Droid.Activities
             if (!ValidateForm())
                 return;
 
-            string pickupLocationPlaceId = PickUpLocations.FirstOrDefault(l => l.Description.Trim() == pickupLocation.Text.Trim()).PlaceId;
-            string dropLocationPlaceId = DropLocations.FirstOrDefault(l => l.Description.Trim() == dropLocation.Text.Trim()).PlaceId;
-
-            var fromLocation = GetLocationDetails(pickupLocationPlaceId, pickupLocation.Text.Trim());
-            var tolocation = GetLocationDetails(dropLocationPlaceId, pickupLocation.Text.Trim());
-
             Request request = new Request()
             {
                 FromLocation = fromLocation,
@@ -428,10 +426,32 @@ namespace SendMe.Droid.Activities
                 pickupLocation.SetError("This field is required", icon);
                 formIsValid = false;
             }
+            else {
+                var pickupLocationPlaceId = PickUpLocations.FirstOrDefault(l => l.Description.Trim() == pickupLocation.Text.Trim());             
+                if (pickupLocationPlaceId == null)
+                {
+                    pickupLocation.SetError("Unable to get your pick up location", icon);
+                    formIsValid = false;
+                }
+                else {
+                    fromLocation = GetLocationDetails(pickupLocationPlaceId.PlaceId, pickupLocation.Text.Trim());
+                }
+            }
             if (!validation.IsRequired(dropLocation.Text))
             {
                 dropLocation.SetError("This field is required", icon);
                 formIsValid = false;
+            }
+            else {
+                var dropLocationPlaceId = DropLocations.FirstOrDefault(l => l.Description.Trim() == dropLocation.Text.Trim());               
+                if (dropLocationPlaceId == null)
+                {
+                    dropLocation.SetError("Unable to get your drop location", icon);
+                    formIsValid = false;
+                }
+                else {
+                    tolocation = GetLocationDetails(dropLocationPlaceId.PlaceId, pickupLocation.Text.Trim());
+                }
             }
 
             return formIsValid;
