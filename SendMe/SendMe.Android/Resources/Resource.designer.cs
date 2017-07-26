@@ -1976,20 +1976,20 @@ namespace SendMe.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f0600b3
+			public const int ContactImage = 2131099827;
+			
 			// aapt resource value: 0x7f0600b4
-			public const int ContactImage = 2131099828;
+			public const int ContactName = 2131099828;
+			
+			// aapt resource value: 0x7f060094
+			public const int ContactsListView = 2131099796;
 			
 			// aapt resource value: 0x7f0600b5
-			public const int ContactName = 2131099829;
+			public const int CourierName = 2131099829;
 			
-			// aapt resource value: 0x7f060095
-			public const int ContactsListView = 2131099797;
-			
-			// aapt resource value: 0x7f0600b6
-			public const int CourierName = 2131099830;
-			
-			// aapt resource value: 0x7f0600cd
-			public const int action0 = 2131099853;
+			// aapt resource value: 0x7f0600cc
+			public const int action0 = 2131099852;
 			
 			// aapt resource value: 0x7f06005a
 			public const int action_bar = 2131099738;
@@ -2015,8 +2015,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06005b
 			public const int action_context_bar = 2131099739;
 			
-			// aapt resource value: 0x7f0600d1
-			public const int action_divider = 2131099857;
+			// aapt resource value: 0x7f0600d0
+			public const int action_divider = 2131099856;
 			
 			// aapt resource value: 0x7f060003
 			public const int action_menu_divider = 2131099651;
@@ -2057,8 +2057,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06007d
 			public const int button_changePassword = 2131099773;
 			
-			// aapt resource value: 0x7f0600c7
-			public const int button_learn_more = 2131099847;
+			// aapt resource value: 0x7f0600c6
+			public const int button_learn_more = 2131099846;
 			
 			// aapt resource value: 0x7f060080
 			public const int button_not_now = 2131099776;
@@ -2066,17 +2066,17 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06007c
 			public const int button_sendOTP = 2131099772;
 			
-			// aapt resource value: 0x7f0600b0
-			public const int button_sign_up = 2131099824;
+			// aapt resource value: 0x7f0600af
+			public const int button_sign_up = 2131099823;
 			
 			// aapt resource value: 0x7f060081
 			public const int button_signin = 2131099777;
 			
-			// aapt resource value: 0x7f0600ce
-			public const int cancel_action = 2131099854;
+			// aapt resource value: 0x7f0600cd
+			public const int cancel_action = 2131099853;
 			
-			// aapt resource value: 0x7f0600c9
-			public const int category_linear_layout = 2131099849;
+			// aapt resource value: 0x7f0600c8
+			public const int category_linear_layout = 2131099848;
 			
 			// aapt resource value: 0x7f06002b
 			public const int center = 2131099691;
@@ -2090,8 +2090,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060052
 			public const int checkbox = 2131099730;
 			
-			// aapt resource value: 0x7f0600d4
-			public const int chronometer = 2131099860;
+			// aapt resource value: 0x7f0600d3
+			public const int chronometer = 2131099859;
 			
 			// aapt resource value: 0x7f060033
 			public const int clip_horizontal = 2131099699;
@@ -2105,11 +2105,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06006b
 			public const int collapsing_toolbar = 2131099755;
 			
-			// aapt resource value: 0x7f0600a8
-			public const int confirm_password = 2131099816;
+			// aapt resource value: 0x7f0600a7
+			public const int confirm_password = 2131099815;
 			
-			// aapt resource value: 0x7f0600cb
-			public const int contactName = 2131099851;
+			// aapt resource value: 0x7f0600ca
+			public const int contactName = 2131099850;
 			
 			// aapt resource value: 0x7f060072
 			public const int contact_us_message = 2131099762;
@@ -2126,11 +2126,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06004a
 			public const int contentPanel = 2131099722;
 			
-			// aapt resource value: 0x7f0600cc
-			public const int courierDescription = 2131099852;
+			// aapt resource value: 0x7f0600cb
+			public const int courierDescription = 2131099851;
 			
-			// aapt resource value: 0x7f0600da
-			public const int courierImage = 2131099866;
+			// aapt resource value: 0x7f0600d9
+			public const int courierImage = 2131099865;
 			
 			// aapt resource value: 0x7f060050
 			public const int custom = 2131099728;
@@ -2147,59 +2147,59 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06007f
 			public const int description = 2131099775;
 			
-			// aapt resource value: 0x7f0600b8
-			public const int design_bottom_sheet = 2131099832;
-			
-			// aapt resource value: 0x7f0600bf
-			public const int design_menu_item_action_area = 2131099839;
+			// aapt resource value: 0x7f0600b7
+			public const int design_bottom_sheet = 2131099831;
 			
 			// aapt resource value: 0x7f0600be
-			public const int design_menu_item_action_area_stub = 2131099838;
+			public const int design_menu_item_action_area = 2131099838;
 			
 			// aapt resource value: 0x7f0600bd
-			public const int design_menu_item_text = 2131099837;
+			public const int design_menu_item_action_area_stub = 2131099837;
 			
 			// aapt resource value: 0x7f0600bc
-			public const int design_navigation_view = 2131099836;
+			public const int design_menu_item_text = 2131099836;
+			
+			// aapt resource value: 0x7f0600bb
+			public const int design_navigation_view = 2131099835;
+			
+			// aapt resource value: 0x7f0600c2
+			public const int dialog_login_cancelbutton = 2131099842;
 			
 			// aapt resource value: 0x7f0600c3
-			public const int dialog_login_cancelbutton = 2131099843;
-			
-			// aapt resource value: 0x7f0600c4
-			public const int dialog_login_loginbutton = 2131099844;
-			
-			// aapt resource value: 0x7f0600c1
-			public const int dialog_login_password = 2131099841;
-			
-			// aapt resource value: 0x7f0600c5
-			public const int dialog_login_tvmessage = 2131099845;
+			public const int dialog_login_loginbutton = 2131099843;
 			
 			// aapt resource value: 0x7f0600c0
-			public const int dialog_login_username = 2131099840;
+			public const int dialog_login_password = 2131099840;
+			
+			// aapt resource value: 0x7f0600c4
+			public const int dialog_login_tvmessage = 2131099844;
+			
+			// aapt resource value: 0x7f0600bf
+			public const int dialog_login_username = 2131099839;
 			
 			// aapt resource value: 0x7f06000e
 			public const int disableHome = 2131099662;
 			
-			// aapt resource value: 0x7f0600a3
-			public const int display_name = 2131099811;
+			// aapt resource value: 0x7f0600a2
+			public const int display_name = 2131099810;
 			
-			// aapt resource value: 0x7f060099
-			public const int drop_location = 2131099801;
+			// aapt resource value: 0x7f060098
+			public const int drop_location = 2131099800;
 			
 			// aapt resource value: 0x7f06005c
 			public const int edit_query = 2131099740;
 			
-			// aapt resource value: 0x7f0600a5
-			public const int email = 2131099813;
+			// aapt resource value: 0x7f0600a4
+			public const int email = 2131099812;
 			
-			// aapt resource value: 0x7f06009d
-			public const int email_layout = 2131099805;
+			// aapt resource value: 0x7f06009c
+			public const int email_layout = 2131099804;
 			
 			// aapt resource value: 0x7f06001c
 			public const int end = 2131099676;
 			
-			// aapt resource value: 0x7f0600d9
-			public const int end_padder = 2131099865;
+			// aapt resource value: 0x7f0600d8
+			public const int end_padder = 2131099864;
 			
 			// aapt resource value: 0x7f060023
 			public const int enterAlways = 2131099683;
@@ -2258,11 +2258,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06003f
 			public const int image = 2131099711;
 			
-			// aapt resource value: 0x7f0600ca
-			public const int imageView1 = 2131099850;
+			// aapt resource value: 0x7f0600c9
+			public const int imageView1 = 2131099849;
 			
-			// aapt resource value: 0x7f0600d8
-			public const int info = 2131099864;
+			// aapt resource value: 0x7f0600d7
+			public const int info = 2131099863;
 			
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
@@ -2270,11 +2270,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06002f
 			public const int left = 2131099695;
 			
-			// aapt resource value: 0x7f0600d2
-			public const int line1 = 2131099858;
+			// aapt resource value: 0x7f0600d1
+			public const int line1 = 2131099857;
 			
-			// aapt resource value: 0x7f0600d6
-			public const int line3 = 2131099862;
+			// aapt resource value: 0x7f0600d5
+			public const int line3 = 2131099861;
 			
 			// aapt resource value: 0x7f06000b
 			public const int listMode = 2131099659;
@@ -2282,8 +2282,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060041
 			public const int list_item = 2131099713;
 			
-			// aapt resource value: 0x7f0600c6
-			public const int login_forgot_password = 2131099846;
+			// aapt resource value: 0x7f0600c5
+			public const int login_forgot_password = 2131099845;
 			
 			// aapt resource value: 0x7f060088
 			public const int main_activateCourier = 2131099784;
@@ -2303,14 +2303,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06008a
 			public const int manage_profile = 2131099786;
 			
-			// aapt resource value: 0x7f060092
-			public const int manage_profile_cancelbutton = 2131099794;
+			// aapt resource value: 0x7f060091
+			public const int manage_profile_cancelbutton = 2131099793;
 			
 			// aapt resource value: 0x7f06008d
 			public const int manage_profile_courier_mobile_number = 2131099789;
-			
-			// aapt resource value: 0x7f060091
-			public const int manage_profile_etExtraCharges = 2131099793;
 			
 			// aapt resource value: 0x7f060090
 			public const int manage_profile_etPricePerKM = 2131099792;
@@ -2318,8 +2315,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06008c
 			public const int manage_profile_etdisplay_name = 2131099788;
 			
-			// aapt resource value: 0x7f060093
-			public const int manage_profile_loginbutton = 2131099795;
+			// aapt resource value: 0x7f060092
+			public const int manage_profile_loginbutton = 2131099794;
 			
 			// aapt resource value: 0x7f06008b
 			public const int manage_profile_textView1 = 2131099787;
@@ -2327,20 +2324,20 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06008f
 			public const int manage_profile_tvCourierCharges = 2131099791;
 			
-			// aapt resource value: 0x7f060094
-			public const int manage_profile_tvmessage = 2131099796;
+			// aapt resource value: 0x7f060093
+			public const int manage_profile_tvmessage = 2131099795;
 			
 			// aapt resource value: 0x7f06008e
 			public const int manage_profile_vehicle_body_type = 2131099790;
 			
-			// aapt resource value: 0x7f0600d0
-			public const int media_actions = 2131099856;
-			
-			// aapt resource value: 0x7f0600de
-			public const int menu_contactUs = 2131099870;
+			// aapt resource value: 0x7f0600cf
+			public const int media_actions = 2131099855;
 			
 			// aapt resource value: 0x7f0600dd
-			public const int menu_signUp = 2131099869;
+			public const int menu_contactUs = 2131099869;
+			
+			// aapt resource value: 0x7f0600dc
+			public const int menu_signUp = 2131099868;
 			
 			// aapt resource value: 0x7f06001d
 			public const int middle = 2131099677;
@@ -2348,17 +2345,17 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060037
 			public const int mini = 2131099703;
 			
-			// aapt resource value: 0x7f0600aa
-			public const int mobile_number = 2131099818;
+			// aapt resource value: 0x7f0600a9
+			public const int mobile_number = 2131099817;
 			
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
 			
-			// aapt resource value: 0x7f06009b
-			public const int name_layout = 2131099803;
+			// aapt resource value: 0x7f06009a
+			public const int name_layout = 2131099802;
 			
-			// aapt resource value: 0x7f0600bb
-			public const int navigation_header_container = 2131099835;
+			// aapt resource value: 0x7f0600ba
+			public const int navigation_header_container = 2131099834;
 			
 			// aapt resource value: 0x7f060021
 			public const int never = 2131099681;
@@ -2378,17 +2375,17 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060078
 			public const int password = 2131099768;
 			
-			// aapt resource value: 0x7f060097
-			public const int pickup_location = 2131099799;
+			// aapt resource value: 0x7f060096
+			public const int pickup_location = 2131099798;
 			
 			// aapt resource value: 0x7f060029
 			public const int pin = 2131099689;
 			
-			// aapt resource value: 0x7f0600ae
-			public const int price_per_KM = 2131099822;
+			// aapt resource value: 0x7f0600ad
+			public const int price_per_KM = 2131099821;
 			
-			// aapt resource value: 0x7f0600c2
-			public const int progress_bar = 2131099842;
+			// aapt resource value: 0x7f0600c1
+			public const int progress_bar = 2131099841;
 			
 			// aapt resource value: 0x7f060006
 			public const int progress_circular = 2131099654;
@@ -2399,44 +2396,44 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060083
 			public const int progressbar_signin = 2131099779;
 			
-			// aapt resource value: 0x7f0600db
-			public const int quotePriceAndCourierKM = 2131099867;
+			// aapt resource value: 0x7f0600da
+			public const int quotePriceAndCourierKM = 2131099866;
 			
 			// aapt resource value: 0x7f060054
 			public const int radio = 2131099732;
 			
-			// aapt resource value: 0x7f0600b3
-			public const int recyclerView = 2131099827;
-			
 			// aapt resource value: 0x7f0600b2
-			public const int refresher = 2131099826;
+			public const int recyclerView = 2131099826;
 			
-			// aapt resource value: 0x7f0600c8
-			public const int requestCourier_ItemSize = 2131099848;
+			// aapt resource value: 0x7f0600b1
+			public const int refresher = 2131099825;
 			
-			// aapt resource value: 0x7f06009a
-			public const int requestCourier_actvdrop_location = 2131099802;
+			// aapt resource value: 0x7f0600c7
+			public const int requestCourier_ItemSize = 2131099847;
 			
-			// aapt resource value: 0x7f060098
-			public const int requestCourier_actvpickup_location = 2131099800;
+			// aapt resource value: 0x7f060099
+			public const int requestCourier_actvdrop_location = 2131099801;
+			
+			// aapt resource value: 0x7f060097
+			public const int requestCourier_actvpickup_location = 2131099799;
+			
+			// aapt resource value: 0x7f06009d
+			public const int requestCourier_etemail = 2131099805;
+			
+			// aapt resource value: 0x7f06009b
+			public const int requestCourier_etname = 2131099803;
 			
 			// aapt resource value: 0x7f06009e
-			public const int requestCourier_etemail = 2131099806;
-			
-			// aapt resource value: 0x7f06009c
-			public const int requestCourier_etname = 2131099804;
+			public const int requestCourier_etphone = 2131099806;
 			
 			// aapt resource value: 0x7f06009f
-			public const int requestCourier_etphone = 2131099807;
+			public const int requestCourier_getQuoteButton = 2131099807;
 			
 			// aapt resource value: 0x7f0600a0
-			public const int requestCourier_getQuoteButton = 2131099808;
+			public const int requestCourier_tvmessage = 2131099808;
 			
-			// aapt resource value: 0x7f0600a1
-			public const int requestCourier_tvmessage = 2131099809;
-			
-			// aapt resource value: 0x7f060096
-			public const int requestCourier_vehiclebodytype = 2131099798;
+			// aapt resource value: 0x7f060095
+			public const int requestCourier_vehiclebodytype = 2131099797;
 			
 			// aapt resource value: 0x7f060030
 			public const int right = 2131099696;
@@ -2510,44 +2507,44 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060013
 			public const int showTitle = 2131099667;
 			
-			// aapt resource value: 0x7f0600a9
-			public const int signup_confirm_password = 2131099817;
+			// aapt resource value: 0x7f0600a8
+			public const int signup_confirm_password = 2131099816;
 			
-			// aapt resource value: 0x7f0600ab
-			public const int signup_courier_mobile_number = 2131099819;
+			// aapt resource value: 0x7f0600aa
+			public const int signup_courier_mobile_number = 2131099818;
 			
-			// aapt resource value: 0x7f0600af
-			public const int signup_etPricePerKM = 2131099823;
+			// aapt resource value: 0x7f0600ae
+			public const int signup_etPricePerKM = 2131099822;
+			
+			// aapt resource value: 0x7f0600a5
+			public const int signup_etUsername = 2131099813;
+			
+			// aapt resource value: 0x7f0600a3
+			public const int signup_etdisplay_name = 2131099811;
 			
 			// aapt resource value: 0x7f0600a6
-			public const int signup_etUsername = 2131099814;
+			public const int signup_password = 2131099814;
 			
-			// aapt resource value: 0x7f0600a4
-			public const int signup_etdisplay_name = 2131099812;
-			
-			// aapt resource value: 0x7f0600a7
-			public const int signup_password = 2131099815;
-			
-			// aapt resource value: 0x7f0600a2
-			public const int signup_profile_picture = 2131099810;
-			
-			// aapt resource value: 0x7f0600ad
-			public const int signup_tvCourierCharges = 2131099821;
-			
-			// aapt resource value: 0x7f0600b1
-			public const int signup_tvmessage = 2131099825;
+			// aapt resource value: 0x7f0600a1
+			public const int signup_profile_picture = 2131099809;
 			
 			// aapt resource value: 0x7f0600ac
-			public const int signup_vehicle_body_type = 2131099820;
+			public const int signup_tvCourierCharges = 2131099820;
 			
-			// aapt resource value: 0x7f0600dc
-			public const int sliding_tabs = 2131099868;
+			// aapt resource value: 0x7f0600b0
+			public const int signup_tvmessage = 2131099824;
 			
-			// aapt resource value: 0x7f0600ba
-			public const int snackbar_action = 2131099834;
+			// aapt resource value: 0x7f0600ab
+			public const int signup_vehicle_body_type = 2131099819;
+			
+			// aapt resource value: 0x7f0600db
+			public const int sliding_tabs = 2131099867;
 			
 			// aapt resource value: 0x7f0600b9
-			public const int snackbar_text = 2131099833;
+			public const int snackbar_action = 2131099833;
+			
+			// aapt resource value: 0x7f0600b8
+			public const int snackbar_text = 2131099832;
 			
 			// aapt resource value: 0x7f060027
 			public const int snap = 2131099687;
@@ -2570,8 +2567,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060031
 			public const int start = 2131099697;
 			
-			// aapt resource value: 0x7f0600cf
-			public const int status_bar_latest_event_content = 2131099855;
+			// aapt resource value: 0x7f0600ce
+			public const int status_bar_latest_event_content = 2131099854;
 			
 			// aapt resource value: 0x7f060065
 			public const int submit_area = 2131099749;
@@ -2579,11 +2576,11 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f06000d
 			public const int tabMode = 2131099661;
 			
-			// aapt resource value: 0x7f0600d7
-			public const int text = 2131099863;
+			// aapt resource value: 0x7f0600d6
+			public const int text = 2131099862;
 			
-			// aapt resource value: 0x7f0600d5
-			public const int text2 = 2131099861;
+			// aapt resource value: 0x7f0600d4
+			public const int text2 = 2131099860;
 			
 			// aapt resource value: 0x7f06004d
 			public const int textSpacerNoButtons = 2131099725;
@@ -2600,8 +2597,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060075
 			public const int textView67 = 2131099765;
 			
-			// aapt resource value: 0x7f0600d3
-			public const int time = 2131099859;
+			// aapt resource value: 0x7f0600d2
+			public const int time = 2131099858;
 			
 			// aapt resource value: 0x7f060043
 			public const int title = 2131099715;
@@ -2618,8 +2615,8 @@ namespace SendMe.Droid
 			// aapt resource value: 0x7f060047
 			public const int topPanel = 2131099719;
 			
-			// aapt resource value: 0x7f0600b7
-			public const int touch_outside = 2131099831;
+			// aapt resource value: 0x7f0600b6
+			public const int touch_outside = 2131099830;
 			
 			// aapt resource value: 0x7f06006e
 			public const int txtDesc = 2131099758;

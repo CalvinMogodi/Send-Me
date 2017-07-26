@@ -40,7 +40,7 @@ namespace SendMe.Droid.Activities
         public BaseViewModel BaseModel { get; set; }
         ImageView profilePicture;
         protected override int LayoutResource => Resource.Layout.activity_sign_up;
-        string[] items = { "Breakdown", "Bus", "Bakkie - Single Cab","Bakkie - Tipper",  "Minibus", "Motorcycle", "Passenger", "Panel Van", "Truck - Drop Side", "Truck",};
+        string[] items = {"Bakkie - Single Cab","Bakkie - Tipper", "Breakdown", "Bus", "Minibus", "Motorcycle", "Panel Van", "Passenger", "Truck", "Truck - Drop Side"};
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

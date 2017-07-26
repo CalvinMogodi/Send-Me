@@ -25,7 +25,7 @@ namespace SendMe.Droid.Activities
         Button signUpButton, cancelButton;
         public string Logo { get; set; }
         public static readonly int PickImageId = 1000;
-        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, extraCharges, vehiclebodytype;
+        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, vehiclebodytype;
         TextView courierCharges, message;
         AlertDialog vehiclebodytypeDialog;
         List<string> mSelectedItems;
@@ -112,12 +112,6 @@ namespace SendMe.Droid.Activities
                 displayName.SetError("This field is required", icon);
                 FormIsValid = false;
             }
-
-            if (!validation.IsRequired(extraCharges.Text))
-            {
-                extraCharges.SetError("This field is required", icon);
-                FormIsValid = false;
-            }
             return FormIsValid;
         }
 
@@ -133,7 +127,6 @@ namespace SendMe.Droid.Activities
             displayName = FindViewById<EditText>(Resource.Id.manage_profile_etdisplay_name);
             profilePicture = FindViewById<ImageView>(Resource.Id.manage_profile);
             pricePerKM = FindViewById<EditText>(Resource.Id.manage_profile_etPricePerKM);
-            extraCharges = FindViewById<EditText>(Resource.Id.manage_profile_etExtraCharges);
             message = FindViewById<TextView>(Resource.Id.manage_profile_tvmessage);
 
             //Set Date

@@ -12,24 +12,24 @@
     <item>Bakkie - Tipper</item>
     <item>Breakdown</item>
     <item>Bus</item>
-    <item>Motorcycle</item>
     <item>Minibus</item>
+    <item>Motorcycle</item>
     <item>Panel Van</item>
     <item>Passenger</item>
-    <item>Truck - Drop Side</item>
     <item>Truck</item>
+    <item>Truck - Drop Side</item>
   </string-array>
-  <string-array name="vehiclebodytypeSignUp_array">
+  <string-array name="vehiclebodytypeSignUp_array">  
     <item>Bakkie - Single Cab</item>
     <item>Bakkie - Tipper</item>
     <item>Breakdown</item>
     <item>Bus</item>
-    <item>Motorcycle</item>
     <item>Minibus</item>
+    <item>Motorcycle</item>    
     <item>Panel Van</item>
     <item>Passenger</item>
-    <item>Truck - Drop Side</item>
     <item>Truck</item>
+    <item>Truck - Drop Side</item>    
   </string-array>
   <string-array name="itemSize_array">
     <item>Select Item Size</item>

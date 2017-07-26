@@ -67,12 +67,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/manage_profile_etPricePerKM"
         android:hint="Price Per KM" />
-    <EditText
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/manage_profile_etExtraCharges"
-        android:hint="Extra Charges" />
     <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
