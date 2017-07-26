@@ -8,24 +8,26 @@
   </string-array>
   <string-array name="vehiclebodytypes_array">
     <item>Select Vehicle Body Type</item>
-    <item>Motorcycle</item>
-    <item>Passenger</item>
     <item>Bakkie - Single Cab</item>
     <item>Bakkie - Tipper</item>
-    <item>Panel Van</item>
+    <item>Breakdown</item>
     <item>Bus</item>
+    <item>Motorcycle</item>
     <item>Minibus</item>
+    <item>Panel Van</item>
+    <item>Passenger</item>
     <item>Truck - Drop Side</item>
     <item>Truck</item>
   </string-array>
   <string-array name="vehiclebodytypeSignUp_array">
-    <item>Motorcycle</item>
-    <item>Passenger</item>
     <item>Bakkie - Single Cab</item>
     <item>Bakkie - Tipper</item>
-    <item>Panel Van</item>
+    <item>Breakdown</item>
     <item>Bus</item>
+    <item>Motorcycle</item>
     <item>Minibus</item>
+    <item>Panel Van</item>
+    <item>Passenger</item>
     <item>Truck - Drop Side</item>
     <item>Truck</item>
   </string-array>

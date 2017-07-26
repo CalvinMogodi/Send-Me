@@ -21,9 +21,6 @@ namespace SendMe.Models
         [JsonProperty("pricePerKM")]
         public double PricePerKM { get; set; }
 
-        [JsonProperty("extraCharges")]
-        public double ExtraCharges { get; set; }
-
         [JsonProperty("vehicleBodyTypes")]
         public List<string> VehicleBodyTypes { get; set; }
     }

@@ -213,7 +213,6 @@ namespace SendMe.Services
                         await firebase.Child("User").Child(thisUser.Key).Child("profilePicture").PutAsync(user.ProfilePicture);
                         await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("mobileNumber").PutAsync(user.Courier.MobileNumber);
                         await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("pricePerKM").PutAsync(user.Courier.PricePerKM);
-                        await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("extraCharges").PutAsync(user.Courier.ExtraCharges);
                         await firebase.Child("User").Child(thisUser.Key).Child("Courier").Child("vehicleBodyTypes").PutAsync(user.Courier.VehicleBodyTypes);
                         updated = true;
                     }
@@ -298,12 +297,7 @@ namespace SendMe.Services
                                 decimal thisKmDistance = kmDistance(request.FromLocation.Latitude, request.FromLocation.Longitude, request.Tolocation.Latitude, request.Tolocation.Longitude);
                                 decimal courierKmDistance = kmDistance(request.FromLocation.Latitude, request.FromLocation.Longitude, user.Object.CurrentLocation.Latitude, user.Object.CurrentLocation.Longitude);
                                 decimal price = thisKmDistance * Convert.ToDecimal(user.Object.Courier.PricePerKM);
-                                switch (request.PackageSize)
-                                {
-                                    case "More Items":
-                                        price = price + Convert.ToDecimal(user.Object.Courier.ExtraCharges);
-                                        break;
-                                }
+                               
 
                                 Quote quote = new Quote
                                 {

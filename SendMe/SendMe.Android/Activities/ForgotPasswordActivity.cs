@@ -16,8 +16,10 @@ using SendMe.Droid.Helpers;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "Forgot Password")]
-    public class ForgotPasswordActivity : Activity
+    [Activity(Label = "Forgot Password", LaunchMode = LaunchMode.SingleInstance, ConfigurationChanges = ConfigChanges.ScreenSize |
+     ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, ParentActivity = typeof(MainActivity))]
+    [MetaData("android.support.PARENT_ACTIVITY", Value = ".MainActivity")]
+    public class ForgotPasswordActivity : BaseActivity
     {
         Button changePasswordButton, sendOTPButton;
         EditText username, password, confirmPassword, oneTimePin;
@@ -26,14 +28,17 @@ namespace SendMe.Droid.Activities
         private static Random random = new Random();
         public User User { get; set; }
         public LoginViewModel ViewModel { get; set; }
+
+        protected override int LayoutResource => Resource.Layout.activity_forgot_password;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            SupportActionBar.Title = "Forgot Password";
             Initialize();
         }
         private async void SendOTPButton_Click(object sender, EventArgs e)
         {
+            message.Text = "";
             Validations validation = new Validations();
             MessageDialog messageDialog = new MessageDialog();
             messageDialog.ShowLoading();
@@ -104,7 +109,6 @@ namespace SendMe.Droid.Activities
         {
 
             // Create your application here
-            SetContentView(Resource.Layout.activity_forgot_password);
             changePasswordButton = FindViewById<Button>(Resource.Id.button_changePassword);
             username = FindViewById<EditText>(Resource.Id.forgotpassword_txtUsername);
             password = FindViewById<EditText>(Resource.Id.forgotpassword_txtPassword);

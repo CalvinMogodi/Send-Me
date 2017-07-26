@@ -14,6 +14,7 @@
   <string name="notnow">Not Now</string>
   <string name="signing_in">Signing in...</string>
   <string name="version_number">Version 1.0</string>
+  <string name="vehicle_body_type_header">Select Vehicle Body Type</string>
   <string name="login">Login</string>
   <string name="learn_more">Learn More</string>
   <string name="description">Description:</string>

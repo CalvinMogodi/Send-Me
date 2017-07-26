@@ -27,9 +27,6 @@ namespace SendMe.Models
         [JsonProperty("mobileNumber")]
         public string MobileNumber { get; set; }
 
-        [JsonProperty("packageSize")]
-        public string PackageSize { get; set; }
-
         [JsonProperty("vehicleBodyType")]
         public string VehicleBodyType { get; set; }
     }

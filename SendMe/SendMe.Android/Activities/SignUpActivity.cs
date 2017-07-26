@@ -18,16 +18,19 @@ using System.IO;
 using Android.Util;
 using Android.Graphics;
 using SendMe.Droid.Helpers;
+using Android.Content.PM;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "@string/sing_up_header")]
-    public class SignUpActivity : Activity
+    [Activity(Label = "@string/sing_up_header", LaunchMode = LaunchMode.SingleInstance, ConfigurationChanges = ConfigChanges.ScreenSize |
+     ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, ParentActivity = typeof(MainActivity))]
+    [MetaData("android.support.PARENT_ACTIVITY", Value = ".MainActivity")]
+    public class SignUpActivity : BaseActivity
     {
         Button signUpButton;
         public string Logo { get; set; }
         public static readonly int PickImageId = 1000;
-        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, extraCharges, vehiclebodytype;
+        EditText username, password, displayName, confirmPassword, courierMobileNumber, pricePerKM, vehiclebodytype;
         TextView courierCharges, message;
         AlertDialog vehiclebodytypeDialog;
         List<string> mSelectedItems;
@@ -36,14 +39,12 @@ namespace SendMe.Droid.Activities
         public SignUpViewModel ViewModel { get; set; }
         public BaseViewModel BaseModel { get; set; }
         ImageView profilePicture;
-
-        string[] items = {"Motorcycle","Passenger","Bakkie - Single Cab","Bakkie - Tipper", "Panel Van","Bus","Minibus","Truck - Drop Side", "Truck",};
+        protected override int LayoutResource => Resource.Layout.activity_sign_up;
+        string[] items = { "Breakdown", "Bus", "Bakkie - Single Cab","Bakkie - Tipper",  "Minibus", "Motorcycle", "Passenger", "Panel Van", "Truck - Drop Side", "Truck",};
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.Title = "Sing Up";
-            SetTitle(Resource.Id.title);
-            this.SetTitle(Resource.Id.title);
+            SupportActionBar.Title = "Sign Up As Courier";
             Initialize();
         }
 
@@ -69,7 +70,6 @@ namespace SendMe.Droid.Activities
                     VehicleBodyTypes = mSelectedItems,
                     MobileNumber = courierMobileNumber.Text.Trim(),
                     PricePerKM = Convert.ToDouble(pricePerKM.Text.Trim()),
-                    ExtraCharges = Convert.ToDouble(extraCharges.Text.Trim()),
                 },
             };
             
@@ -146,12 +146,6 @@ namespace SendMe.Droid.Activities
                 displayName.SetError("This field is required", icon);
                 FormIsValid = false;
             }
-            
-            if (!validation.IsRequired(extraCharges.Text))
-            {
-                extraCharges.SetError("This field is required", icon);
-                FormIsValid = false;
-            }  
             return FormIsValid;
         }
 
@@ -159,7 +153,6 @@ namespace SendMe.Droid.Activities
         private void Initialize()
         {
             // Create your application here
-            SetContentView(Resource.Layout.activity_sign_up);
             signUpButton = FindViewById<Button>(Resource.Id.button_sign_up);
             vehiclebodytype = FindViewById<EditText>(Resource.Id.signup_vehicle_body_type);
             username = FindViewById<EditText>(Resource.Id.signup_etUsername);
@@ -170,7 +163,6 @@ namespace SendMe.Droid.Activities
             profilePicture = FindViewById<ImageView>(Resource.Id.signup_profile_picture);
             courierCharges = FindViewById<TextView>(Resource.Id.signup_tvCourierCharges);
             pricePerKM = FindViewById<EditText>(Resource.Id.signup_etPricePerKM);
-            extraCharges = FindViewById<EditText>(Resource.Id.signup_etExtraCharges);
             message = FindViewById<TextView>(Resource.Id.signup_tvmessage);
              
             ViewModel = new SignUpViewModel();

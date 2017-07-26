@@ -10,24 +10,27 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using SendMe.Helpers;
+using Android.Content.PM;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "Contact_Activity")]
-    public class ContactActivity : Activity
+    [Activity(Label = "Contact_Activity", LaunchMode = LaunchMode.SingleInstance, ConfigurationChanges = ConfigChanges.ScreenSize |
+     ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, ParentActivity = typeof(MainActivity))]
+    [MetaData("android.support.PARENT_ACTIVITY", Value = ".MainActivity")]
+    public class ContactActivity : BaseActivity
     {
         EditText message;
+        protected override int LayoutResource => Resource.Layout.activity_contact_us;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            SupportActionBar.Title = "Contact Us";            
             Initialize();
         }
 
         private void Initialize()
         {
             // Create your application here
-            SetContentView(Resource.Layout.activity_contact_us);
             Button sendButton = FindViewById<Button>(Resource.Id.contact_us_send_button);
             message = FindViewById<EditText>(Resource.Id.contact_us_message);
             sendButton.Click += SendSMSButton_Click;

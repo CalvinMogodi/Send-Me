@@ -19,19 +19,23 @@ using SendMe.Helpers;
 using SendMe.Models;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Android.Content.PM;
 
 namespace SendMe.Droid.Activities
 {
-    [Activity(Label = "QuoteActivity")]
-    public class QuoteActivity : Activity
+    [Activity(Label = "QuoteActivity", LaunchMode = LaunchMode.SingleInstance, ConfigurationChanges = ConfigChanges.ScreenSize |
+     ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, ParentActivity = typeof(RequestCourierActivity))]
+    [MetaData("android.support.PARENT_ACTIVITY", Value = ".RequestCourierActivity")]
+    public class QuoteActivity : BaseActivity
     {
         QuotesViewModel quotesViewModel;
         Request Request;
+
+        protected override int LayoutResource => Resource.Layout.activity_quote;
         protected override async void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.activity_quote);
-
+            SupportActionBar.Title = "Quotes";
             MessageDialog messageDialog = new MessageDialog();
             messageDialog.ShowLoading();
             var request = Intent.GetStringExtra("request");

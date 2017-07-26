@@ -31,7 +31,7 @@ namespace SendMe.Droid.Activities
         AppBarLayout appBar;
         EditText email, phone, name;
         TextView message;
-        Spinner vehiclebodytype, itemSize;
+        Spinner vehiclebodytype;
         AutoCompleteTextView pickupLocation, dropLocation, autocompleteTextView;
         List<Location> PickUpLocations = new List<Location>();
         List<Location> DropLocations = new List<Location>();
@@ -41,38 +41,20 @@ namespace SendMe.Droid.Activities
         private String TYPE_AUTOCOMPLETE = "/autocomplete";
         private String OUT_JSON = "/json";
         private String API_KEY = "AIzaSyBxzMOzDddAIUKR3RlINgbhtTReEGCvEKI";
-
-        //private static string LOG_TAG = "Google Places Autocomplete";
-        //private static string PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
-        //private static string TYPE_AUTOCOMPLETE = "/autocomplete";
-        //private static string OUT_JSON = "/json";
         //private static string API_KEY = "AIzaSyCvXMXsHtLL2zCDR_wb6nhrW_iwO6xWy2g";
-
-        public Toolbar Toolbar
-        {
-            get;
-            set;
-        }
-
         RequestCourierViewModel requestCourierViewModel;
-
         protected override int LayoutResource => Resource.Layout.activity_request_courier;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            //Toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SupportActionBar.Title = "Request Couier";
+            SupportActionBar.Title = "Request Quote";
             Initialize();
             
         }
-
-
         public void Initialize() {
 
             // Create your application here
-            //SetContentView(Resource.Layout.activity_request_courier);
             getQuoteButton = FindViewById<Button>(Resource.Id.requestCourier_getQuoteButton);
             email = FindViewById<EditText>(Resource.Id.requestCourier_etemail);
             phone = FindViewById<EditText>(Resource.Id.requestCourier_etphone);
@@ -85,34 +67,16 @@ namespace SendMe.Droid.Activities
             getQuoteButton.Click += GetQuoteButton_Click;
 
             //set vehicle body type drop down
-            List<string> mylist = new List<string>();
-            var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.vehiclebodytypes_array, Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            vehiclebodytype.Adapter = adapter;
-            vehiclebodytype.ItemSelected += VehiclebodytypeItemSelected;
-
-            //set item size drop down
-            itemSize = FindViewById<Spinner>(Resource.Id.requestCourier_ItemSize);
-            var itemSizeAdapter = ArrayAdapter.CreateFromResource(this, Resource.Array.itemSize_array, Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            itemSizeAdapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            itemSize.Adapter = itemSizeAdapter;
+            //List<string> mylist = new List<string>();
+            //var adapter = ArrayAdapter.CreateFromResource(this, Resource.Array.vehiclebodytypes_array, Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            //adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            //vehiclebodytype.Adapter = adapter;
 
             pickupLocation = FindViewById<AutoCompleteTextView>(Resource.Id.requestCourier_actvpickup_location);
             dropLocation = FindViewById<AutoCompleteTextView>(Resource.Id.requestCourier_actvdrop_location);
 
             pickupLocation.TextChanged += PickupLocationAutocomplete;
             dropLocation.TextChanged += DropLocationAutocomplete;
-            itemSize.Visibility = ViewStates.Gone;
-        }
-
-
-        public void VehiclebodytypeItemSelected(object sender, EventArgs e)
-        {
-            var selectedItem = vehiclebodytype.SelectedItem.ToString();
-            if (selectedItem == "Motorcycle" || selectedItem == "Passenger")
-                itemSize.Visibility = ViewStates.Gone;
-            else
-                itemSize.Visibility = ViewStates.Visible;
         }
         public void PickupLocationAutocomplete(object sender, EventArgs e)
         {
@@ -368,7 +332,6 @@ namespace SendMe.Droid.Activities
             {
                 FromLocation = fromLocation,
                 Tolocation = tolocation,
-                PackageSize = itemSize.SelectedItem.ToString(),
                 VehicleBodyType = vehiclebodytype.SelectedItem.ToString(),
                 MobileNumber = phone.Text,
                 Email = email.Text,
@@ -393,17 +356,7 @@ namespace SendMe.Droid.Activities
                 MessageDialog messageDialog = new MessageDialog();
                 messageDialog.SendToast("Please Select Vehicle Body Type");
                 formIsValid = false;
-            }
-
-            if (itemSize.Visibility == ViewStates.Visible)
-            {
-                if (itemSize.SelectedItem.ToString() == "Select Item Size")
-                {
-                    MessageDialog messageDialog = new MessageDialog();
-                    messageDialog.SendToast("Please Select Item Size");
-                    formIsValid = false;
-                }
-            }            
+            }          
 
             if (!validation.IsValidEmail(email.Text))
             {

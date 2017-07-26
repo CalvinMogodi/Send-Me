@@ -74,7 +74,6 @@ namespace SendMe.Droid.Activities
                     VehicleBodyTypes = mSelectedItems,
                     MobileNumber = courierMobileNumber.Text.Trim(),
                     PricePerKM = Convert.ToDouble(pricePerKM.Text.Trim()),
-                    ExtraCharges = Convert.ToDouble(extraCharges.Text.Trim()),
                 },
             };
 
@@ -170,7 +169,6 @@ namespace SendMe.Droid.Activities
             courierMobileNumber.Text = ViewModel.User.Courier.MobileNumber;
             displayName.Text = ViewModel.User.DisplayName;
             pricePerKM.Text = ViewModel.User.Courier.PricePerKM.ToString();
-            extraCharges.Text = ViewModel.User.Courier.ExtraCharges.ToString();
             if (ViewModel.User.ProfilePicture == null)
             {
                 profilePicture.SetImageResource(Resource.Drawable.profile_generic);
